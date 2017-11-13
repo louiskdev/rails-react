@@ -1,0 +1,233 @@
+$z-index: 999;
+
+.call-bg {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: $z-index;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.call-window {
+  position: absolute;
+  z-index: $z-index + 1;
+  &:not(.fullscreen) {
+    max-width: 95%;
+    max-height: 95%;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+  &.fullscreen {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    .call-box {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+  .pub-sub-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .call-box {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    background-color: rgba(48, 62, 73, 1) !important;
+    color: #fff !important;
+    &.call-open {
+      width: 1000px;
+      height: 600px;
+    }
+    &.call-incoming {
+      width: 350px;
+      height: 300px;
+      .user-info {
+        top: 47%;
+      }
+    }
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+  .user-info {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    text-align: center;
+    z-index: 10;
+  }
+  .caller-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 999px;
+    border: 2px solid #fff;
+    display: block;
+    margin: auto;
+  }
+  .friends {
+    $arrow-size: 10px;
+    background: #000;
+    padding: 15px;
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    bottom: 73px + $arrow-size;
+    transform: translate3d(-50%, 0, 0);
+    text-align: center;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 50%;
+      margin-left: -$arrow-size;
+      top: 100%;
+      border-style: solid;
+      border-width: $arrow-size $arrow-size 0;
+      border-color: #000 transparent;
+    }
+  }
+  .buttons {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translate3d(-50%, 0, 0);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 100;
+    .button {
+      display: inline-block;
+      width: 60px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.4);
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.85);
+      }
+      & > svg {
+        vertical-align: middle;
+      }
+    }
+  }
+  .accept-hangup-buttons {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    text-align: center;
+  }
+  #publisher > .OT_root {
+    width: 200px !important;
+    height: 160px !important;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    z-index: 21;
+  }
+  #subscriber {
+    display: none;
+  }
+  &.video-call #subscriber {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 20;
+    display: block !important;
+  }
+  #group-subscribers {
+    padding: 25px 25px 0;
+    text-align: center;
+    &:after {
+      content: ' ';
+      display: block;
+      clear: both;
+    }
+    .subscriber-wrapper {
+      display: inline-block;
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+      .subscriber-info {
+        position: absolute;
+        margin-top: -110px;
+      }
+      .username {
+        margin-top: 10px;
+        color: #fff;
+        text-align: center;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 100%;
+        z-index: 22;
+      }
+      .avatar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        display: none;
+      }
+      .avatar,
+      .subscriber,
+      .subscriber-info {
+        width: 110px !important;
+        height: 110px !important;
+      }
+      .subscriber,
+      .subscriber-info {
+        z-index: 21;
+      }
+      .subscriber {
+        /* Speaker red outline */
+        &.speaking ~ .subscriber-info {
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #f00;
+            box-sizing: border-box;
+            z-index: 23;
+          }
+        }
+        /* Speaker with video feed full screen */
+        &:not(.OT_audio-only) {
+          &.speaking {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 20;
+          }
+          &.speaking ~ .subscriber-info {
+            position: relative;
+            margin-top: 0;
+            .avatar {
+              display: block;
+            }
+          }
+        }
+        /* Speaker with audio only shows avatar */
+        &.OT_audio-only ~ .subscriber-info .avatar {
+          display: block;
+        }
+      }
+    }
+  }
+}

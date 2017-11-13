@@ -1,0 +1,300 @@
+.gallery {
+  /*position: fixed;
+  left: 90px;
+  top: 80px;
+  width: calc(100% - 382px);
+  */
+
+  .filter-sort-block{
+    a {
+      margin-left: 0;
+      margin-right: 10px;
+      font-size: 0.9em;
+    }
+  }
+  .album-title {
+    color: #898B8E;
+    padding: 0 0 28px 0;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    a {
+      color: #5AC0CF
+    }
+    .album-name {
+      font-size: 1.3em;
+    }
+  }
+  .gallery-actions {
+    display: inline-block;
+    top: 46px;
+    right: 6px;
+    position: absolute;
+  }
+  .gallery-inner {
+    /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);*/
+    background-color: $white-color;
+    padding: 20px;
+    position: relative;
+    overflow-y: auto;
+  }
+  .gallery-header {
+    color: #898B8E;
+    font-size: 1.2em;
+    margin-bottom: 14px;
+    .gallery-actions {
+      display: inline-block;
+    }
+  }
+
+  .gallery-images, .gallery-videos {
+    color: #898B8E;
+    .gallery-content {
+      text-align: left;
+      .album-item {
+        border: 1px solid #f1f1f1;
+      }
+    }
+  }
+  .gallery-videos {
+    margin-top: 24px;
+  }
+
+  .gallery-content {
+    font-size: 1.2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    .album-item {
+      display: flex!important;
+      align-items: center;
+      flex-direction: column;
+      .video-block.full {
+        width: 100%;
+      }
+      .album-media-count {
+        background: #65D3E3!important;
+        color: $white-color!important;
+        font-size: 16px!important;
+        font-weight: bold!important;
+      }
+      .album-link {
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+        position: relative;
+        width: 100%;
+        img {
+          min-height: 176px;
+          max-width: 176px;
+          margin: 0px -50%;
+        }
+      }
+      .album-name {
+        color: #46505E;
+      }
+      .album-input-hover {
+        display: none!important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+        background-color: #424D5E;
+      }
+      .album-media-count {
+        background-color: #65D3E3;
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+        color: $white-color;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        text-align: center;
+        line-height: 40px;
+      }
+      &:hover {
+        .album-input-hover {
+          display: flex !important;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+.gallery-uploads {
+  width: 100%;
+  text-align: left;
+  display: block;
+  padding: 0;
+  .uploaded-attachments {
+    .image-attachments-preview {
+      width: 136px;
+      height: 136px;
+      display: inline-block;
+    }
+    .video-preview {
+      width: 80px!important;
+      height: 80px!important;
+    }
+  }
+  .upload-attachment {
+    width: 136px;
+    height: 136px;
+    border: 1px dashed #dfdfdf;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    display: inline-block;
+    background-color: $white-color;
+    margin-top: 16px;
+  }
+}
+
+.gallery-media-preview {
+  .myb-message {
+    box-shadow: none;
+    border: none;
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    .message-inner {
+      padding: 0;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      background-color: #111111;
+      .message-content {
+        margin-bottom: 0;
+        width: 100%;
+        height: 100%;
+        &:hover {
+          .preview-bottom-bar {
+            display: block;
+          }
+        }
+        .preview-bottom-bar {
+          display: none;
+          position: absolute;
+          top: 0;
+          width: 100%;
+          background-color: rgba(17, 17, 17, 0.5);
+          height: 48px;
+          padding: 0;
+          .post-options {
+            width: 48px;
+            top: auto;
+          }
+        }
+
+        .image-block.full, .video-block.full {
+          height: 100%!important;
+          max-height: none;
+          text-align: center;
+          .helper {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+          }
+          img, .video {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            margin: 0;
+            bottom: auto;
+            width: auto;
+          }
+          video {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            margin: 0;
+            bottom: auto;
+            width: auto;
+            max-height: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+    .media-right-bar {
+      display: inline-block;
+      width: 400px;
+      min-width: 320px;
+      .comments {
+        .myb-message {
+          background-color: $white-color!important;
+        }
+      }
+    }
+  }
+  .message-stats {
+    padding: 10px 32px!important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F6F8F9;
+    .stats {
+      .stat {
+        margin-right: 8px;
+        color: #AFB0B2;
+      }
+    }
+    .username {
+      a {
+        color: #65D3E3;
+      }
+    }
+  }
+  .new-message-box {
+    padding: 4px 12px 8px 4px;
+  }
+  .comments {
+    padding: 18px;
+    background-color: $white-color;
+    border: none;
+    overflow: auto;
+    .myb-message, .new-message-box, .message-stats {
+      background-color: $white-color;
+    }
+    .message-stats {
+      display: block;
+      padding: 0;
+    }
+  }
+  .emoji-picker {
+    top: auto;
+    bottom: 56px;
+  }
+
+}
+
+#preview-left-arrow, #preview-right-arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 16px 44px 16px 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  &:hover {
+    svg {
+      fill: #ffffff!important;
+    }
+  }
+}
+
+#preview-right-arrow {
+  left: auto;
+  right: 0;
+  padding: 16px 16px 16px 44px;
+}

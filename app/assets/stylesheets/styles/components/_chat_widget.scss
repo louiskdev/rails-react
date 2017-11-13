@@ -1,0 +1,30 @@
+.chatwidget {
+  background-color: #ffffff;
+  display: flex;
+  .channels-area {
+    width: 250px;
+    flex-grow: 0;
+    border-right: 1px solid #f0f0f1;
+  }
+  .chat-area {
+    height: 100%;
+    flex-grow: 1;
+    position: relative;
+  }
+  .chat-messages {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 44px;
+    bottom: 57px;
+    padding: 15px !important;
+  }
+  .new-message-box {
+    box-shadow: none;
+    margin-bottom: 0;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+  }
+}

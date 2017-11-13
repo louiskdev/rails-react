@@ -1,0 +1,400 @@
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  graphql:
+    user_type:
+      type_description: |
+        *`User` entity representation in GraphQl.* Corresponds `User` model.
+
+      id: |
+        *User ID.*
+
+        **Returned Value:** `Integer`.
+      email: |
+        *User's email.*
+        This field value is unavailable for other users.
+
+        **Returned Value:** `String`.
+      username: |
+        *Username of this user*
+
+        **Returned Value:** `String`.
+      first_name: |
+        *First name of this user.*
+
+        **Returned Value:** `String`.
+      gender: |
+        *Gender of this user.*
+
+        **Returned Value:** `String`.
+
+        **Possible Values:**
+
+        + `male`
+
+        + `female`
+
+        + `nil`
+      zip_code: |
+        *Zip code of this user.*
+
+        **Returned Value:** `String`.
+      phone: |
+        *Phone number of this user.*
+
+        **Returned Value:** `String`.
+      birthday: |
+        *Birthdate of this user.* Format 'yyyy-mm-dd'
+
+        **Returned Value:** `String`.
+      language: |
+        *Preferred language of this user.*
+
+        **Returned Value:** `String`.
+      description: |
+        *Short bio of this user.*
+
+        **Returned Value:** `String`.
+      cover_image_url: |
+        *Cover image url.*
+
+        **Returned Value:** `String`.
+      is_online: |
+        *Flag allowing to check user's online status.*
+
+        **Returned Value:** `Boolean`.
+      created_at: |
+        *The date this user created an account.* Format 'yyyy-mm-dd'
+
+        **Returned Value:** `String`.
+      updated_at: |
+        *The date this user last updated the account.* Format 'yyyy-mm-dd'
+
+        **Returned Value:** `String`.
+      current_sign_in_ip: |
+        *Current IP address of this user.*
+        This field value is unavailable for other users.
+
+        **Returned Value:** `String`.
+      access_token: |
+        *Access token of this user.*
+        This field value is unavailable for other users.
+
+        **Returned Value:** `String`.
+      client_id: |
+        *Device ID.*
+        This field value is unavailable for other users.
+
+        **Returned Value:** `String`.
+      is_completed: |
+        *This field shows whether the profile of this user is completed or not.*
+        This field value is unavailable for other users.
+
+        **Returned Value:** `Boolean`.
+      likes_count: |
+        *Number of likes of this user.*
+
+        **Returned Value:** `Integer`.
+      pictures_count: |
+        *Number of pictures user uploaded into galleries.*
+
+        **Returned Value:** `Integer`.
+      bubbles_count: |
+        *Number of bubbles this user is a member of.*
+
+        **Returned Value:** `Integer`.
+      bubbles:
+        description: |
+          *Get this user's bubbles list.*
+
+          **Returned Value:** `Bubble (BubbleType)` object collection.
+
+          **Request Example:**
+          ```
+            ...
+              bubbles {
+                edges {
+                  node {
+                    # some BubbleType object fields
+                    name
+                  }
+                }
+              }
+            ...
+          ```
+
+          **Response Example:**
+          ```
+            ...
+              "bubbles": {
+                "edges": [
+                  {
+                    "node": {
+                      "name": "Best bubble"
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "Test #1"
+                    }
+                  }
+                ]
+              }
+            ...
+          ```
+        args:
+          random: |
+            Allows sorting result in a random order
+
+            **Type:** `Boolean`
+          keyword: |
+           Allows filtering result according to passed template
+
+           **Type:** `String`
+      friendship_status: |
+        *Friendship status between this user and current user.*
+        The field makes sense in case of another user's data request.
+
+        **Returned Value:** `String`.
+
+        **Possible Values:**
+
+        + `pending`
+
+        + `approved`
+
+        + `blocked`
+
+        + `nil`
+      friends_count: |
+        *Number of friends this user has.*
+
+        **Returned Value:** `Integer`.
+      friends:
+        description: |
+          *Get current user's friends list.*
+          This field value is unavailable for other users.
+          An empty array will be returned to other users `[]`
+
+          **Returned Value:** `User (UserType)` object collection.
+
+          **Request Example:**
+          ```
+            ...
+              friends {
+                edges {
+                  node {
+                    # some UserType object fields
+                    username
+                  }
+                }
+              }
+            ...
+          ```
+
+          **Response Example:**
+          ```
+            ...
+              "friends": {
+                "edges": [
+                  {
+                    "node": {
+                      "username": "alex"
+                    }
+                  },
+                  {
+                    "node": {
+                      "username": "dimi"
+                    }
+                  }
+                ]
+              }
+            ...
+          ```
+        args:
+          online: |
+            Allows filtering friends list by online status.
+
+            **Type:** `Boolean`
+
+            **Possible Values:**
+
+            + `true` - all friends that are currently online on the site;
+
+            + `false` - all friends that are currently offline on the site.
+
+            If you don't pass that param, server won't consider friends online status in the end output.
+          keyword: |
+            Allows filtering friends list by username or first name. Letter case is being ignored.
+
+            **Type:** `String`
+          sort_by: |
+            Allows sorting friends list.
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `last_message_date` - sorts by latest message date received from friend in wheelchat.
+          all: |
+            Influences the result only if sorting by latest message date is applied.
+
+            **Type:** `Boolean`
+
+            **Possible Values:**
+
+            + `true` - result is not affected by extra filtration;
+
+            + `false` (default) - result contains only friends that a user had private communication with earlier (non-empty wheelchat history)
+      birthday_friends:
+        description: |
+          *Get current user's friends list with those who will have birthdays soon.*
+          Time interval is set to 7 days startig today. This field value is unavailable for other users.
+          An empty array will be returned to other users `[]`
+
+          **Returned Value:** `User (UserType)` object collection.
+
+          **Request Example:**
+          ```
+            ...
+              birthday_friends {
+                edges {
+                  node {
+                    # some UserType object fields
+                    username
+                  }
+                }
+              }
+            ...
+          ```
+
+          **Response Example:**
+          ```
+            ...
+              "birthday_friends": {
+                "edges": [
+                  {
+                    "node": {
+                      "username": "alex"
+                    }
+                  },
+                  {
+                    "node": {
+                      "username": "dimi"
+                    }
+                  }
+                ]
+              }
+            ...
+          ```
+      notifications:
+        description: |
+          *Get current user's notifications list.*
+          This field value is unavailable for other users.
+
+          **Returned Value:** `Notification (NotificationType)` object collection.
+
+          **Request Example:**
+          ```
+            ...
+              notifications {
+                edges {
+                  node {
+                    # some NotificationType object fields
+                    text
+                  }
+                }
+              }
+            ...
+          ```
+
+          **Response Example:**
+          ```
+            ...
+              "notifications": {
+                "edges": [
+                  {
+                    "node": {
+                      "text": "some text"
+                    }
+                  },
+                  {
+                    "node": {
+                      "text": "some text"
+                    }
+                  }
+                ]
+              }
+            ...
+          ```
+        args:
+          status: |
+            Allows notifications filtering by "read/unread" pattern.
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `read` - only read notifications will be returned
+
+            + `unread` - only unread notifications will be returned
+
+            If the param is absent, then this pattern won't be considered.
+      wheel_chat_channel_name: |
+        *Common wheelchat channel name.*
+        This field makes sense to request together with friend's info.
+        This field value is unavailable for other users.
+        **Returned Value:** `String`.
+
+        **Examples:** '1_8', '1001_1002'
+      wheel_chat_last_message: |
+        *Common wheelchat last message.*
+        This field makes sense to request together with friend's info.
+        This field value is unavailable for other users.
+
+        **Returned Value:** `WheelChatMessage (WheelChat::MessageType)` object.
+
+        **Request Example:**
+        ```
+          ...
+           wheel_chat_last_message {
+             # some WheelChat::MessageType object fields
+             text
+           }
+          ...
+        ```
+
+        **Response Example:**
+        ```
+          ...
+            "wheel_chat_last_message": {
+              "text": "some text"
+            }
+          ...
+        ```
+      wheel_chat_missed_messages_count: |
+        *Number of missed/unread messages in common wheelchat*
+        This field makes sense to request together with friend's info.
+        This field value is unavailable for other users.
+
+        **Returned Value:** `Integer`.
+      user_role_in_bubble: |
+        *User's role in the current bubble.* Bubble is taken from current request context.
+        Current field makes sense when requesting data about some bubble members.
+        User may find out his role. Other user's role can be found out only by bubble owner and moderators.
+
+        **Returned Values:**
+
+        + `owner`
+
+        + `moderator`
+
+        + `guest`
+      user_online_in_bubble: |
+        *Shows whether the current user is present on this bubble's pages.* Bubble is taken from current request context.
+        Current field makes sense when requesting data about some bubble members.
+
+        **Returned Value:** `Boolean`
+
+

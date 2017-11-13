@@ -1,0 +1,36 @@
+en:
+  graphql:
+    uploading_process_data_type:
+      type_description: |
+        *Specialized type created to represent video processing data process*
+        This data is received from `Zencoder.com`.
+        Appropriate `rails` model is absent.
+
+      state: |
+        *Current upload status.*
+
+        **Returned value:** `String`.
+
+        **Possible values:**
+
+        + `waiting`
+
+        + `queued`
+
+        + `assigning`
+
+        + `processing`
+
+        + `finished`
+
+        + `failed`
+
+        + `cancelled`
+
+        + `no input`
+
+        + `skipped`
+      progress: |
+        *Current task accomplishment marker in %.* Value changes within interval/range from -1 to 100.
+
+        **Returned value:** `Integer`.

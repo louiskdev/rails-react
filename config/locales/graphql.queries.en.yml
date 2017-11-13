@@ -1,0 +1,1060 @@
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  graphql:
+    queries:
+      postsFromBlog:
+        description: |
+          *Returns all the posts from current blog* as object-activities which are usually used in feeds.
+          Query additionally returns field `unread_activities_count` - number of new records not yet viewed by user in the given blog.
+          Access to post data via field: `o_post`.
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Blog not found`
+
+          **Returned Value:** objects array `Activity (ActivityType)`.
+
+          **Request Example:**
+          ```
+            query getPosts {
+              postsFromBlog(blog_id: 3, first: 2) {
+                edges {
+                  node {
+                    # some activity fields
+                    o_post {
+                      # some post fields
+                      text
+                      medium {
+                        thumb_url
+                      }
+                      author {
+                        username
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ```
+
+          **Response Example:**
+          ```
+            {
+              "data": {
+                "postsFromBlog": {
+                  "edges": [
+                    {
+                      "node": {
+                        "o_post": {
+                          "text": "blog!!",
+                          "medium": null,
+                          "author": {
+                            "username": "alex-01"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "node": {
+                        "o_post": {
+                          "text": "another test",
+                          "medium": null,
+                          "author": {
+                            "username": "dog"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ```
+        args:
+          blog_id: |
+            Blog-widget identifier
+
+            **Required**
+
+            **Type:** `Integer`
+          privacy: |
+            Allows result filtering according to selected privacy mode
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `public` - only public posts
+
+            + `friends` - only friends' posts
+
+            + `private` - only private posts
+
+            + `nil` - filter is not applied
+          sort_by: |
+            Allows result sorting
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `newest` (default) - by creation date in descending order
+
+            + `rating` - by rating in descending order
+
+            + `favorite` - only favorited/selected posts
+
+      postFromBlog:
+        description: |
+          *Finds a post by ID and returns related basic activity.*
+          Access to post data via field: `o_post`.
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Post not found`
+
+          **Returned Value:** object type `Activity (ActivityType)`.
+
+          **Request Example:**
+          ```
+            query getPost {
+              postFromBlog(id: 105) {
+                # some activity fields
+                o_post {
+                  # some post fields
+                  text
+                  medium {
+                    thumb_url
+                  }
+                  author {
+                    username
+                  }
+                }
+              }
+            }
+          ```
+
+          **Response Example:**
+          ```
+            {
+              "data": {
+                "postFromBlog": {
+                  "o_post": {
+                    "text": "another test",
+                    "medium": null,
+                    "author": {
+                      "username": "dog"
+                    }
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Post ID
+
+            **Required**
+
+            **Type:** `Integer`
+
+      bubble_feed:
+        description: |
+          *Returns feed of that bubble,* particularly, activities array(feed elements).
+          Query additionally returns field `unread_activities_count` - number of new records not yet viewed by user in the given feed.
+          You can get data of the necessary object from each activity(post, for example).
+          For that, you can address/call to `object` field, giving required fragments:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          or use special `o_blabla` fields, where blabla - required type:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `User has incomplete profile`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          **Returned Value:** Objects array type `Activity (ActivityType)`.
+
+          **Request Example:**
+          ```
+          query getBubbleFeed {
+            bubble_feed(permalink: "GKav366t", first: 2) {
+              edges {
+                node {
+                  name
+                  user_friendly_name
+                  object {
+                    ... on Post {
+                      text
+                    }
+                    ... on Medium {
+                      thumb_url
+                    }
+                    ... on Bubble {
+                      permalink
+                    }
+                    ... on Album {
+                      name
+                    }
+                  }
+
+                  o_post {
+                    text
+                  }
+                  o_medium {
+                    thumb_url
+                  }
+                  o_bubble {
+                    permalink
+                  }
+                  o_album {
+                    name
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "bubble_feed": {
+                "edges": [
+                  {
+                    "node": {
+                      "name": "blogs.create_post",
+                      "user_friendly_name": "wrote a post on",
+                      "object": {
+                        "text": "Updated post"
+                      },
+                      "o_post": {
+                        "text": "Updated post"
+                      },
+                      "o_medium": null,
+                      "o_bubble": null,
+                      "o_album": null
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "media.put_media",
+                      "user_friendly_name": "uploaded a new video/image to gallery",
+                      "object": {
+                        "thumb_url": "/uploads/attachments/picture/file/46/thumb_six.jpg_show.jpeg"
+                      },
+                      "o_post": null,
+                      "o_medium": {
+                        "thumb_url": "/uploads/attachments/picture/file/46/thumb_six.jpg_show.jpeg"
+                      },
+                      "o_bubble": null,
+                      "o_album": null
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          permalink: |
+            Symbolic bubble identifier used in url.
+
+            **Required**
+
+            **Type:** `String`
+          privacy: |
+            Allows result filtering according to selected privacy mode
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `public` - only public posts
+
+            + `friends` - only friends' posts
+
+            + `private` - only private posts
+
+            + `nil` - filter is not applied
+          sort_by: |
+            Allows result sorting
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `newest` (default) - by creation date in descending order
+
+            + `rating` - by rating in descending order
+
+            + `favorite` - only favorited/selected posts
+
+      my_feed:
+        description: |
+          *Returns current user's feed,* particularly, activities array(feed elements).
+          You can get data of the necessary object from each activity(post, for example).
+          For that, you can address/call to `object` field, giving necessary fragments:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          or use special `o_blabla` fields, where blabla - required type:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          **Returned Value:** Objects array type `Activity (ActivityType)`.
+
+          **Request Example:**
+          ```
+          query getMyFeed {
+            my_feed(first: 2) {
+              edges {
+                node {
+                  # some activity fields
+                  name
+                  created_at
+                  o_note {
+                    text
+                  }
+                	object {
+                    ... on Note {
+                      text
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "my_feed": {
+                "edges": [
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "created_at": "2016-08-30 09:48:23 UTC",
+                      "o_note": {
+                        "text": null
+                      },
+                      "object": {
+                        "text": null
+                      }
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "created_at": "2016-08-30 09:47:47 UTC",
+                      "o_note": {
+                        "text": "vxvx :innocent:"
+                      },
+                      "object": {
+                        "text": "vxvx :innocent:"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          privacy: |
+            Allows result filtering according to selected privacy mode
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `public` - only public posts
+
+            + `private` - only private posts
+
+            + `nil` - filter is not applied
+          sort_by: |
+            Allows result sorting
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `newest` (default) - by creation date in descending order
+
+            + `rating` - by rating in descending order
+
+            + `favorite` - only favorited/selected posts
+
+      friends_feed:
+        description: |
+          *Returns friend's feed of the current user,* particularly, activities array (feed elements).
+          Query additionally returns field `unread_activities_count` - number of new records not yet viewed by user in the given feed.
+          You can get data of the necessary object from each activity(post, for example).
+          For that, you can address/call to `object` field, giving necessary fragments:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          or use special `o_blabla` fields, where blabla - required type:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          **Returned Value:** Objects array type `Activity (ActivityType)`.
+
+          **Request Example:**
+          ```
+          query getFriendsFeed {
+            friends_feed(first: 2) {
+              unread_activities_count
+              edges {
+                node {
+                  # some activity fields
+                  name
+                  object {
+                    ... on Post {
+                      text
+                    }
+                  }
+                  o_post {
+                    text
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "friends_feed": {
+                "unread_activities_count": 0,
+                "edges": [
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "object": {},
+                      "o_post": null
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "object": {},
+                      "o_post": null
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          privacy: |
+            Allows result filtering according to selected privacy mode
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `public` - only public posts
+
+            + `private` - only private posts
+
+            + `nil` - filter is not applied
+          sort_by: |
+            Allows result sorting
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `newest` (default) - by creation date in descending order
+
+            + `rating` - by rating in descending order
+
+            + `favorite` - only favorited/selected posts
+          touch: |
+            Allows flagging feed elements as viewed.
+
+            **Type:** `Boolean`
+
+            **Possible Values:**
+
+            + `true` (default) - feed elements will be flagged as viewed
+
+            + `false` - feed elements **won't be** flagged as viewed
+
+      user_feed:
+        description: |
+          *Get public feed of some user.* If the quered user is not a friend, query will return an empty array.
+          You can get data of the necessary object from each activity(post, for example).
+          For that, you can address/call to `object` field, giving necessary fragments:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          or use special `o_blabla` fields, where blabla - required type:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `User not found`
+
+          **Returned Value:** Objects array type `Activity (ActivityType)`.
+
+          **Request Example:**
+          ```
+          query getUserFeed {
+            user_feed(first: 2, username: "alex-02") {
+              edges {
+                node {
+                  #some activity fields
+                  created_at
+                  object {
+                    ... on Note {
+                      text
+                    }
+                  }
+                  o_note {
+                    text
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "user_feed": {
+                "edges": [
+                  {
+                    "node": {
+                      "created_at": "2016-05-31 13:07:06 UTC",
+                      "object": {
+                        "text": "gooood morning"
+                      },
+                      "o_note": {
+                        "text": "gooood morning"
+                      }
+                    }
+                  },
+                  {
+                    "node": {
+                      "created_at": "2016-05-20 12:59:33 UTC",
+                      "object": {
+                        "text": "world"
+                      },
+                      "o_note": {
+                        "text": "world"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          username: |
+            Username of user.
+
+            **Required**
+
+            **Type:** `String`
+          sort_by: |
+            Allows result sorting
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `newest` (default) - by creation date in descending order
+
+            + `rating` - by rating in descending order
+
+      availableWidgets:
+        description: |
+          *Get a list of available widgets, which can be activated in the bubble.*
+
+          **Returned Value:** Array of `String`s.
+
+          **Request Example:**
+          ```
+          query getWidgetsList {
+            availableWidgets
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "availableWidgets": [
+                "Blog",
+                "Chat",
+                "Gallery"
+              ]
+            }
+          }
+          ```
+      galleryWidgetAlbums:
+        description: |
+          *Returns albums list, which are contained in this widget-gallery*.
+          If a gallery is owned by a private bubble, and the current user is not its member, then his access will be denied.
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          + `Bubble has no gallery widget`
+
+          **Returned Value:** Objects array type `Album (AlbumType)`.
+
+          **Request Example:**
+          ```
+          query getAlbumsFromGalleryWidget {
+            galleryWidgetAlbums(bubble_id: 9, first:10) {
+              edges {
+                node {
+                  # some Album fields
+                  name
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "galleryWidgetAlbums": {
+                "edges": [
+                  {
+                    "node": {
+                      "name": "X-men"
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "album #1"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          bubble_id: |
+            Bubble ID, from the gallery of which you need to get albums list.
+
+            **Required**
+
+            **Type:** `Integer`
+      myNotifications:
+        description: |
+          *Get current user's notifications list.*
+          Additionally, this query allows to get the number of unread/missed notifications `unread_notifications_count`.
+
+          **Returned Value:** `Notification (NotificationType)` object collection.
+
+          **Request Example:**
+          ```
+          query getMyNotifs {
+            myNotifications(status: "unread") {
+              unread_notifications_count
+              edges {
+                node {
+                  # some Notification fields
+                  id
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "myNotifications": {
+                "unread_notifications_count": 10,
+                "edges": [
+                  {
+                    "node": {
+                      "id": "328"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "316"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          status: |
+            Allows notifications filtering by "read/unread" pattern.
+
+            **Type:** `String`
+
+            **Possible Values:**
+
+            + `read` - only read notifications will be returned
+
+            + `unread` - only unread notifications will be returned
+
+            If the param is absent, then this pattern won't be considered.
+      bubbleMembers:
+        description: |
+          *Get bubble members list.*
+          If this bubble is private, and the current user is not its member then his access will be denied.
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          **Returned Value:** Objects array type `User (UserType)`.
+
+          **Request Example:**
+          ```
+          query getBubbleMembers {
+            bubbleMembers(bubble_id: 10, keyword: "lex") {
+              edges {
+                node {
+                  # some User fields
+                  username
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "bubbleMembers": {
+                "edges": [
+                  {
+                    "node": {
+                      "username": "alex-02"
+                    }
+                  },
+                  {
+                    "node": {
+                      "username": "alex-01"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          bubble_id: |
+            Bubble ID.
+
+            **Required**
+
+            **Type:** `Integer`
+          keyword: |
+            Allows filtering result according to passed pattern.
+
+            **Type:** `String`
+      mediaFromGallery:
+        description: |
+          *Returns a list of media files uploaded into this gallery.* User must be a member of the appropriate bubble.
+          Query allows to additionally get album and bubble data.
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Gallery not found`
+
+          + `Album not found`
+
+          **Returned Value:** Objects array type `Medium (MediumType)`.
+
+          **Request Example:**
+          ```
+          query getGalleryMedia {
+            mediaFromGallery(gallery_id: 3, only_my_media: true, album_id: 1, first: 1) {
+              album {
+                # some album fields
+                name
+              }
+              bubble {
+                # some bubble fields
+                name
+              }
+              edges {
+                node {
+                  # some medium fields
+                  thumb_url
+                }
+              }
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "mediaFromGallery": {
+                "album": {
+                  "name": "album #1"
+                },
+                "bubble": {
+                  "name": "FULL-33180"
+                },
+                "edges": [
+                  {
+                    "node": {
+                      "thumb_url": "/uploads/attachments/picture/file/66/thumb_pict.png"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          gallery_id: |
+            Gallery ID.
+
+            **Required**
+
+            **Type:** `Integer`
+          album_id: |
+            Album ID. Allows returning only media files from appropriate album.
+
+            **Type:** `Integer`
+          only_my_media: |
+            Flag allowing to return media files uploaded only by current user.
+
+            **Type:** `Boolean`
+      checkConfirmationToken:
+        description: |
+          *Allows checking **confirmation token** received by user via email during registration process.*
+
+          **Returned Value:** `String`.
+
+          Possible Values:
+
+          + `Invalid` - unknown token
+
+          + `Confirmed` - token has already been used for account confirmation.
+
+          + `Ok` - token is correct and can be used.
+
+          **Request Example:**
+          ```
+          query checkToken {
+            checkConfirmationToken(token: "7eQyvNzArp8-tGqJgxvJ")
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "checkConfirmationToken": "Ok"
+            }
+          }
+          ```
+        args:
+          token: |
+            Special token which is used for user's email confirmation during registration process on the site.
+
+            **Type:** `String`
+      checkUserByInvitationToken:
+        description: |
+          *Query allows to check whether the user that got a bubble ivitation is/is not registered on the site.*
+          Check is done via the token from invitation email. If the email that received invitation is already registered
+          in the system, query will return an error, otherwise a token-string will be returned (`confirmation token`).
+          Request may return errors:
+
+          + `Invalid token`
+
+          + `Invitation already accepted`
+
+          + `Invitation already declined`
+
+          + `Invalid invitation`
+
+          + `User has completed profile`
+
+          + `Unknown invitation state`
+
+          **Returned Value:** `String`.
+
+          **Request Example:**
+          ```
+          query check {
+            checkUserByInvitationToken(token: "DJsxA2uQTxgWQyt3v2iU")
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "checkUserByInvitationToken": null
+            }
+          }
+          ```
+        args:
+          token: |
+            Special token-string that is a link param from invitation email.
+
+            **Required**
+
+            **Type:** `String`
+      bubbleCounters:
+        description: |
+          *Allows to get counter's values of the number of records, unread by current user for various bubble structure elements.*
+          Request may return errors:
+
+          + `User is unauthorized`
+
+          + `User has incomplete profile`
+
+          + `Bubble not found`
+
+          + `Access denied`
+
+          **Returned Value:** object type `BubbleCountersData`.
+
+          **Request Example:**
+          ```
+          query getBubbleCounters {
+            bubbleCounters(permalink: "GKav366t") {
+              feed_unread_items_count
+              chat_unread_items_count
+              gallery_unread_items_count
+              blog_unread_items_count
+              events_unread_items_count
+              total_unread_items_count
+            }
+          }
+          ```
+
+          **Response Example:**
+          ```
+          {
+            "data": {
+              "bubbleCounters": {
+                "feed_unread_items_count": 2,
+                "chat_unread_items_count": 0,
+                "gallery_unread_items_count": 0,
+                "blog_unread_items_count": 1,
+                "events_unread_items_count": 0,
+                "total_unread_items_count": 2
+              }
+            }
+          }
+          ```
+        args:
+          permalink: |
+            Symbolic bubble identifier used in url.
+
+            **Required**
+
+            **Type:** `String`
+

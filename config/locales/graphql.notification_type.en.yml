@@ -1,0 +1,84 @@
+
+en:
+  graphql:
+    notification_type:
+      type_description: |
+        *Personal notifications entity representation in GraphQL.*
+        Users receive these notifications when something happens in the app. E.g., a friend request is sent.
+        Corresponds `Notification` rails model.
+
+      id: |
+        *Notification ID.*
+
+        **Returned Value:** `ID`.
+      text: |
+        *Text of this notification.*
+
+        **Returned Value:** `String`.
+      created_at: |
+        Creation date of this notification*
+
+        **Returned Value:** `String`.
+      code: |
+       *Speial numeric code which allows to identify current notification category.*
+
+       **Returned Value:** `Integer`.
+      object_id: |
+        *Object identifier, to which a notification is devoted.*
+
+        **Returned Value:** `Integer`.
+      object_type: |
+        *Object type, to which a notification is devoted.*
+
+        **Returned Value:** `String`.
+      activity_id: |
+        *Acitvity identifier (of basic feed element).* Required for navigation.
+        Example: for implementation of a redirect to post page after clicking notification.
+
+        **Returned Value:** `Integer`.
+      rating: |
+        *Related object numeric rating.* The given field has a non-empty value only in notifications devoted to assigning/changing rating of some object (e.g., of post).
+
+        **Returned Value:** `Integer`.
+      bubble_id: |
+        *Bubble identifier.* The given field has a non-empty value if associated object (e.g. post) is created in the widget of current bubble.
+
+        **Returned Value:** `Integer`.
+      bubble: |
+        *Bubble related to this notification.* May be absent.
+
+        **Returned Value:** `Bubble (BubbleType)`.
+      initiator: |
+        *Given notification initiator.* Currently, only another user can be the initiator.
+
+        **Returned Value:** `User (UserType)`.
+
+        **Request Example:**
+        ```
+          ...
+            initiator {
+              username
+            }
+          ...
+        ```
+
+        **Response Example:**
+        ```
+          ...
+            "initiator": {
+              "username": "alex"
+            }
+          ...
+        ```
+      read_at: |
+        *Date when the notification was read by user.*
+
+        **Returned Value:** `String`.
+      unread: |
+        *Flag defining whether the notification was read by user or not.*
+
+        **Returned Value:** `Boolean`.
+      new_member_token: |
+        *Special token from invitation* (if this notification is related to invitation to join bubble).
+
+        **Returned Value:** `String`.

@@ -1,0 +1,96 @@
+
+//Mixins
+
+//Primary Color Gradient
+@mixin primaryGrad($gradDeg: 180 , $gradStart: $brand-primary-light , $gradEnd : $brand-primary){
+  /* Old browsers */
+  background: $gradStart;
+  /* FF3.6+ */
+  background: -moz-linear-gradient($gradDeg,  $gradStart 0%, $gradEnd 100%);
+  /* Chrome,Safari4+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,$gradStart), color-stop(100%,$gradEnd));
+  /* Chrome10+,Safari5.1+ */
+  background: -webkit-linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* IE10+ */
+  background: -ms-linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* W3C */
+  background: linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* IE6-9 fallback on horizontal gradient */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gradStart', endColorstr='$gradEnd',GradientType=0 );
+}
+
+
+//Gray Color Gradient
+@mixin grayGrad($gradDeg: 180 , $gradStart: $gray-lighter , $gradEnd : $gray){
+  /* Old browsers */
+  background: $gradStart;
+  /* FF3.6+ */
+  background: -moz-linear-gradient($gradDeg,  $gradStart 0%, $gradEnd 100%);
+  /* Chrome,Safari4+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,$gradStart), color-stop(100%,$gradEnd));
+  /* Chrome10+,Safari5.1+ */
+  background: -webkit-linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* IE10+ */
+  background: -ms-linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* W3C */
+  background: linear-gradient($gradDeg,  $gradStart 0%,$gradEnd 100%);
+  /* IE6-9 fallback on horizontal gradient */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gradStart', endColorstr='$gradEnd',GradientType=0 );
+}
+
+
+//Border Radius
+@mixin border-radius($radius : 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+
+//Box Shadow
+@mixin box-shadow($shadow : 0px 1px 3px rgba(0,0,0,.5)) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  -o-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+
+//Text Shadow
+@mixin text-shadow($tShadow : 0px 1px 3px rgba(0,0,0,.5)) {
+  -webkit-box-shadow: $tShadow;
+  -moz-box-shadow: $tShadow;
+  -o-box-shadow: $tShadow;
+  box-shadow: $tShadow;
+}
+
+
+//Transition
+@mixin transition($transitionvalue : all .25s ease-in-out){
+  -webkit-transition:$transitionvalue;
+  -o-transition:$transitionvalue;
+  -moz-transition:$transitionvalue;
+  transition:$transitionvalue;
+}
+
+@mixin transparent($color, $alpha) {
+  $rgba: rgba($color, $alpha);
+  $ie-hex-str: ie-hex-str($rgba);
+  background-color: transparent;
+  background-color: $rgba;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$ie-hex-str},endColorstr=#{$ie-hex-str});
+  zoom: 1;
+}
+
+.backgroundCover{
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

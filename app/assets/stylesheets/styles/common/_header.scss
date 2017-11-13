@@ -1,0 +1,228 @@
+.app-menubar {
+  background-color: $white-color;
+  position: relative;
+  z-index: $z-index-app-header;
+  color: $dashboard-text-color;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.app-menubar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+  transform: translate3d(0, 0, 0);
+}
+
+.header-notifications {
+  padding: 0px!important;
+  padding-bottom: 30px!important;
+  &.no-notifs {
+    padding-bottom: 0px!important;
+  }
+  .view-all-link {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: block;
+  }
+}
+
+.app-menu,
+.app-user,
+.app-search {
+  height: $app-menu-height;
+  line-height: $app-menu-height;
+}
+
+.app-menu {
+  position: absolute;
+  left: 0;
+}
+.app-user {
+  position: absolute;
+  right: 0;
+  max-width: 220px;
+}
+.app-search-wrapper {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 260px 0 60px;
+}
+.app-search {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.app-logo, .app-menu-expand {
+  &:before {
+    background-color: transparent!important;
+  }
+  &.back-to {
+    width: 164px;
+    img {
+      margin-right: 6px;
+    }
+  }
+  .app-logo-wrapper {
+    margin-left: 64px;
+    width: 30px;
+    border-radius: 8px;
+    padding: 8px 0px;
+    background-color: $white-color;
+    .app-logo-text {
+      font-weight: bold;
+      font-size: 2em;
+      padding: 0 9px;
+      line-height: 1;
+      color: rgb(47, 59, 77);
+      vertical-align: -9%;
+    }
+  }
+}
+.app-menu-expand {
+  position: fixed;
+  z-index: 999;
+  left: 64px;
+  top: 15px;
+  width: 26px;
+  height: 26px;
+  margin-left: 0;
+  .app-logo-wrapper {
+    margin-left: 0;
+  }
+}
+
+.app-menubar-logo {
+  width: 30px;
+}
+
+.app-menubar-item {
+  font-size: 13px;
+  letter-spacing: .5px;
+  padding: 0;
+  position: relative;
+  height: 100%;
+  display: inline-block;
+  color: inherit !important;
+  &:hover,
+  &.active {
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 4px;
+      background-color: $app-menu-primary-color;
+    }
+  }
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.app-user {
+  .button-bordered-hover {
+    &:hover:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 4px;
+      background-color: $app-menu-primary-color;
+    }
+  }
+}
+
+.app-menubar-logo {
+  margin-top: -3px;
+}
+
+.notif-menu, .friends-menu, .user-menu {
+  &::after {
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    display: inline-block;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #FFFFFF;
+    border-left: 8px solid transparent;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 0px -1px;
+    content: '';
+    z-index: 2200;
+  }
+}
+
+.user-menu-item {
+  & > div > div {
+    padding: 0px 16px 0px 50px!important;
+  }
+  &:hover {
+    background-color: #f1f1f1 !important;
+  }
+}
+
+.nav {
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  padding-top: 22px;
+  &.transparent {
+    padding-top: 12px;
+  }
+  .transparent {
+    h1 {
+      color: $gray-darker;
+    }
+  }
+  img {
+    max-width: 20px;
+    margin-bottom: 20px;
+  }
+  .app-logo img {
+    max-width: 40px;
+    width: 34px;
+  }
+  a {
+
+    &:hover {
+      text-decoration:none;
+    }
+  }
+  h1 {
+    font-size: 25px;
+  }
+  .logo_mobile {
+    display: none;
+  }
+  .header-right-block {
+    .signup_button {
+      margin-left: 16px;
+    }
+    .howitwork_button, .signup_button {
+      background-color: transparent!important;
+    }
+  }
+}
+
+a.header-top-button {
+  &:hover {
+    color: $white-color !important;
+    opacity: 1 !important;
+  }
+}
+
+.transparent {
+  a.header-top-button {
+    &:hover {
+      color: rgb(68, 187, 164) !important;
+      opacity: 1!important;
+      span {
+        color: rgb(68, 187, 164) !important;
+      }
+    }
+  }
+}

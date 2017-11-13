@@ -1,0 +1,1793 @@
+ru:
+  graphql:
+    mutations:
+      createBlogPost:
+        description: |
+          *Создает новый пост в указанном блоге (виджете).* Пользователь должен быть участником соответствущего баббла.
+          Запрос возвращает активность (элемент фида). Данные оригинального поста могут быть получены с помощью поля `o_post`.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Blog not found`
+
+          + `Associated bubble not found`
+
+          + `Record should have text and/or media file`
+
+          + и прочие ошибки валидации
+
+          **Возвращаемое значение:** объект типа `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+            mutation createPost {
+              createBlogPost(input: {blog_id: 3, text: "New post"}) {
+                activity {
+                  o_post {
+                    text
+                    created_at
+                  }
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "createBlogPost": {
+                  "activity": {
+                    "o_post": {
+                      "text": "New post",
+                      "created_at": "2016-08-30 07:26:45 UTC"
+                    }
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          blog_id: |
+            Идентификатор блога, в который будет добавлен новый пост.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          title: |
+            Заголовок поста.
+
+            **Тип:** `String`
+          text: |
+            Текст поста.
+
+            **Тип:** `String`
+          picture_files: |
+            Base64 кодированный файл или относительный путь к файлу заранее загруженного на сервер.
+
+            **Тип:** `Array`
+          picture_filename: |
+            Имя файла картинки.
+
+            **Тип:** `String`
+          video_id: |
+            Идентификатор заранее загруженного видео. Необходимо использовать ID соответствующего объекта Medium
+
+            **Тип:** `Integer`
+          link_url: |
+            Веб url внешнего ресурса. Например `https://github.com/`
+
+            **Тип:** `String`
+          link_title: |
+            Заголовок характеризующий внешний ресурс, url которого был добавлен в пост
+
+            **Тип:** `String`
+          link_description: |
+            Короткое описание внешнего ресурса, url которого был добавлен в пост
+
+            **Тип:** `String`
+          link_picture_url: |
+            Url картинки, которая является графической илюстрацией для внешнего ресурса
+
+            **Тип:** `String`
+
+      destroyBlogPost:
+        description: |
+          *Удаляет пост из блог виджета по ID.*
+           Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Post not found`
+
+          **Возвращаемое значение:** `Boolean`.
+
+          **Пример запроса:**
+          ```
+            mutation destroyPost {
+              destroyBlogPost(input: {id: 103}) {
+                status
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "destroyBlogPost": {
+                  "status": true
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор поста.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+
+      updateBlogPost:
+        description: |
+          *Позволяет изменить заголовок и текстовое содержимое поста блог виджета.*
+          Запрос возвращает активность (элемент фида). Данные оригинального поста могут быть получены с помощью поля `o_post`.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Post not found`
+
+          + `Record should have text and/or media file`
+
+          + и прочие ошибки валидации
+
+          **Возвращаемое значение:** объект типа `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+            mutation updatePost {
+              updateBlogPost(input: {id: 110, text: "Updated post"}) {
+                activity {
+                  o_post {
+                    text
+                    created_at
+                    updated_at
+                  }
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "updateBlogPost": {
+                  "activity": {
+                    "o_post": {
+                      "text": "Updated post",
+                      "created_at": "2016-08-30 07:26:45 UTC",
+                      "updated_at": "2016-08-30 12:59:32 UTC"
+                    }
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор поста.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          title: |
+            Заголовок поста.
+
+            **Тип:** `String`
+          text: |
+            Текст поста.
+
+            **Тип:** `String`
+          link_url: |
+            Веб url внешнего ресурса. Например `https://github.com/`
+
+            **Тип:** `String`
+          link_title: |
+            Заголовок характеризующий внешний ресурс, url которого был добавлен в пост
+
+            **Тип:** `String`
+          link_description: |
+            Короткое описание внешнего ресурса, url которого был добавлен в пост
+
+            **Тип:** `String`
+          link_picture_url: |
+            Url картинки, которая является графической илюстрацией для внешнего ресурса
+
+            **Тип:** `String`
+      createMedium:
+        description: |
+          *Загружает новый медиа файл (картинку или видео) в приватную галерею пользователя или в галерею-виджет.*
+          Пользователь должен иметь доступ к указанному альбому. Чтобы добавить медиа файл в галерею,
+          пользователь должен быть менеджером или хозяином соответствующего баббла.
+          *Загрузка видео на данный момент невозможна из-за ограничений Apollo.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          + `Associated gallery widget not found`
+
+          + `Album not found`
+
+          + `Picture is invalid`
+
+          + `Attachment is absent`
+
+          **Возвращаемое значение:** объект типа `Medium (MediumType)`.
+
+          **Пример запроса:**
+          ```
+            mutation uploadMediaFileToGalleryWidget {
+              createMedium(input: {bubble_id: 9, album_id: 4, title: "test", filename: "1.png",  picture_file: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAABvFBMVEX////J5/ZfueY2p983p984qOA1p99ZtuW/4/WByOsenNsypd8zpt8gndxsvujJ6PY3p+Ahnty33/NfueU0pt9NsOIxpd4rot4qod0sot4xpd8vpN4intxku+eb0++s2/KZ0u9euOYwpN43qOAto94uo94+quAso94ln91nvOf5/P1at+Ujn9wmoN0jntyHyuzE5fYrot3w+f2Fyeskn9yMze2Y0u694vRIruI1pt85qOB7xepxwegYmttXteRgueWc0+8fndzv+Pyz3vOf1fBku+bZ7vgood1Kr+J2w+kpod1Ir+KY0e9+xuonoN39/v6m2PBEreGIy+x0wukloN31+v2y3fODyOtYtuR6xOpzwukRl9nW7fhvwOl5w+rQ6vfi8/pVtORTtOT1+/0hndyOzu3e8fljuuYxpN4ln9zL6PbM6PeRz+3p9fv+/v59xuqPzu3b7/l/xuus2vL0+v1Jr+Izpd+13vNPsuNKsOOu2/L9/v9Aq+FeueaMzO2Y0u/2+/274fRovefx+fzZ7vlRs+ROsuOz3fOr2vFFruJ3w+nA4/Wt2/KX0e5ywekooN1HruKp2fFct+ZMseMmAgtoAAACEUlEQVRIx9XVaVfTQBQG4Cu5UypJkWC0pKkoMdi6pIjGJW5YWapBi4pW3FFx3zfccF8RFdQ/bChymmVuT+Lxg77fkpnnZObOnFwAWNAgIIsUTDQmwc3CJjGicI2UagZY1NQSFVQjt8JiMZZgyhKIuo+agbiCMYgt/lOCS9NtamauQMgjiUDxUMsua1++okPWcaVgdGKYJFblfAbzq6GaNWvXmYWu9d0hgoUNGy3P3UFzE8xn8xaArXqI2NsAtmdr39E7wJsdO3cpQZLpcQd2F+ffY2qPV/T2Qb8YIv2zQwN2Sag+SnvBn31OaGHS4NzQ/rwjucvrPOAXzeVwxTA/9Hv04KFiyTAP+8TwEd65qLVJRyvHRo77yAmNc/oonTwFZE7rHKKfOdswSpJzIoeI56FONIG3MLOOuDDGvcnqRZpUHC7BsUskuXyFS5hw9RpFUsgnTCmMXOeKGyojiHkTbnFJSaAIVefbOUaRFvMOT9yVkSQMrWEO0RVGE4ZG9737D/zioc7qkvG888gvHucYRSTDSJflJ0/94NmEwSgiPe978TL5KrCN1+UMIwlqb94G9/3uvSUwmrg/U/nDR8/8oU+DWX4T9WwfRac4+bm9MjX15eu3iWLbONGtAhVTtLQzXXJUTaGb7j/QX/4e+YMmnohrbGiUYooZSKbiEeu72wZkJTqwrR+zt6n1Z2Rjz7jf+AUu/GAb29DRTAAAAABJRU5ErkJggg=="
+              }) {
+                # some Medium fields
+                medium {
+                  thumb_url
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "createMedium": {
+                  "medium": {
+                    "thumb_url": "/uploads/attachments/picture/file/121/thumb_1.png",
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          picture_file: |
+            Base64 кодированный файл изображения.
+
+            **Обязательный**
+
+            **Тип:** `String`
+          filename: |
+            Имя файла изображения.
+
+            **Тип:** `String`
+          title: |
+            Краткая подпись к файлу.
+
+            **Тип:** `String`
+          bubble_id: |
+            Идентификатор баббла, в виджет-галерею которого будет добавлен этот медиа файл.
+
+            **Тип:** `Integer`
+          album_id: |
+            Идентификатор альбома, в который будет добавлен этот медиа файл.
+
+            **Тип:** `Integer`
+          video_file: |
+            *Сейчас недоступный*
+      createAlbum:
+        description: |
+          *Создает новый альбом в приватной галерее пользователя или в галерее-виджете.*
+          Чтобы создать альбом в галерее-виджете, пользователь должен быть менеджером или хозяином соответствующего баббла.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          + `Associated gallery widget not found`
+
+          **Возвращаемое значение:** объект типа `Album (AlbumType)`.
+
+          **Пример запроса:**
+          ```
+            mutation createNewAlbum {
+              createAlbum(input: {name: "New album"}) {
+                album {
+                  #some album fields
+                  name
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "createAlbum": {
+                  "album": {
+                    "name": "New album"
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          name: |
+            Название альбома.
+
+            **Обязательный**
+
+            **Тип:** `String`
+          privacy: |
+            Уровень доступа для данного альбома.
+
+            **Обязательный**
+
+            **Возможные значения:**
+
+            + `private` - загружать файлы в данный альбом могут только модераторы баббла и владелец.
+              В личной галерее пользователя все альбомы приватные.
+
+            + `public` - любой участник баббла может загружать файлы в соответствующий альбом.
+
+            **Тип:** `String`
+          description: |
+            Описание альбома.
+
+            **Тип:** `String`
+          bubble_id: |
+            Идентификатор баббла, в виджет-галерею которого будет добавлен этот альбом.
+
+            **Тип:** `Integer`
+      destroyAlbum:
+        description: |
+          *Удаляет указанный альбом в приватной галерее пользователя или в галерее-виджете.* **Альбом должен быть пустым.**
+          Чтобы удалить альбом в галерее-виджете, пользователь должен быть менеджером или хозяином соответствующего баббла.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Album not found`
+
+          + `Cannot destroy non-empty album`
+
+          **Возвращаемое значение:** статус операции `Boolean`.
+
+          **Пример запроса:**
+          ```
+            mutation rmAlbum {
+              destroyAlbum(input: {id: 3}) {
+                status
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "destroyAlbum": {
+                  "status": true
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор альбома.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      updateAlbum:
+        description: |
+          *Изменяет имя и описание альбома в приватной галерее пользователя или в галерее-виджете.*
+          Чтобы обновить альбом в галерее-виджете, пользователь должен быть менеджером или хозяином соответствующего баббла.
+          Можно передавать все или только изменившиеся параметры.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          **Возвращаемое значение:** объект типа `Album (AlbumType)`.
+
+          **Пример запроса:**
+          ```
+            mutation editAlbum {
+              updateAlbum(input:{id: 14, name: "Super Cars"}) {
+                album {
+                  # some Album fields
+                  name
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "updateAlbum": {
+                  "album": {
+                    "name": "Super Cars",
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор альбома.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          name: |
+            Название альбома.
+
+            **Тип:** `String`
+          description: |
+            Описание альбома.
+
+            **Тип:** `String`
+      touchNotification:
+        description: |
+          *Помечает уведомление как прочитанное.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Notification not found`
+
+          **Возвращаемое значение:** статус операции `Boolean`.
+
+          **Пример запроса:**
+          ```
+            mutation readNotif {
+              touchNotification(input: {id: 306}) {
+                status
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "touchNotification": {
+                  "status": true
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор уведомления.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      sendBubbleInvitation:
+        description: |
+          *Отправляет приглашение присоединиться к указанному бабблу.* В запросе нужно указать юзернейм или имейл приглашаемого пользователя.
+          **Допустимо передавать только один из этих аргуметов**. Можно пригласить как уже зарегистрированного на сайте пользователя так и нового.
+          Приглашаемому пользователю будет выслан соответствующий имейл. Если пользователь уже зарегистрирован на сайте,
+          то помимо имейла он еще получит личное уведомление.
+          Запрос может вернуть ошибки:
+
+          + `Request must contain one of the following params: 'email' or 'username'`
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          + `User not found by username 'USERNAME'`
+
+          + `User 'USERNAME' is already a member of this bubble`
+
+          **Возвращаемое значение:** статус операции `Boolean`.
+
+          **Пример запроса:**
+          ```
+            mutation inviteUser {
+              sendBubbleInvitation(input:{bubble_id: 9, email: "user@example.com"}) {
+                status
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "sendBubbleInvitation": {
+                  "status": true
+                }
+              }
+            }
+          ```
+
+          **RealTime:**
+
+          + Если приглашенный пользователь уже зарегистрирован на сайте, то ему придет уведомление.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `notification_added`
+        args:
+          bubble_id: |
+            Идентификатор баббла, участником которого станет приглашенный пользователь.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          username: |
+            Ник пользователя уже зарегистрированного на сайте, которому будет отправлено приглашение.
+
+            **Тип:** `String`
+          email: |
+            Имейл, на который будет отправлено приглашение.
+
+            **Тип:** `String`
+      acceptBubbleInvitation:
+        description: |
+          *Используя эту мутацию пользователь может принять приглашение присоединиться к бабблу.* Пользователь будет добавлен в баббл в статусе гостя.
+          В запросе нужно указать токен, который можно найти в данных соответствующего уведомления или в ссылке из пригласительного имейла.
+          Запрос может вернуть ошибки:
+
+          + `Invalid token`
+
+          + `Access denied`
+
+          + `Invitation already accepted`
+
+          + `Invitation already declined`
+
+          + `Invalid invitation`
+
+          + `User is already a member of this bubble`
+
+          + `Unknown invitation state`
+
+          **Возвращаемые значения:**
+
+          + `status (Boolean)` - статус операции свидетельствующий об успешности присоединения к бабблу
+
+          + `confirmation_token (String)` - строка-токен если у данного пользователя незаполнен профиль
+
+          **Пример запроса:**
+          ```
+            mutation acceptInv {
+              acceptBubbleInvitation(input: {token: "Do3j9zZH3aTX9JzsETj2"}) {
+                status
+                confirmation_token
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "acceptBubbleInvitation": {
+                  "status": true
+                  "confirmation_token": "YFSpUhKMxKVBH7Hmd3cs"
+                }
+              }
+            }
+          ```
+
+          **RealTime:**
+
+          + Пользователь, который отправил приглашение получит уведомление о том что приглашение принято.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `notification_added`
+
+          + Владелец баббла получит уведомление о том что в баббле появился новый участник.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `notification_added`
+
+          + Пользователи которые в данный момент находятся на странице баббла получат данные о новом участнике.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `member_joined`
+
+          + В фиде баббла появится запись о присоединении нового участника.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `feed_item_added`
+
+          + В собственном фиде пользователя, который присоединился к бабблу, появится запись об этом событии.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `feed_item_added`
+
+          + Во friends-фиде у каждого друга пользователя, который присоединился к бабблу, появится запись об этом событии.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `feed_item_added`
+        args:
+          token: |
+            Символьный идентификатор, по которому выполняется поиск пригласительного.
+
+            **Обязательный**
+
+            **Тип:** `String`
+      cancelBubbleInvitation:
+        description: |
+          *Используя эту мутацию пользователь может отклонить приглашение присоединиться к бабблу.*
+          В запросе нужно указать токен, который можно найти в данных соответствующего уведомления или в ссылке из пригласительного имейла.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Invitation not found`
+
+          **Возвращаемое значение:** статус операции `Boolean`.
+
+          **Пример запроса:**
+          ```
+            mutation cancelInv {
+              cancelBubbleInvitation(input: {token: "nvkV8ypNDEejxpCEm-ei"}) {
+                status
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "cancelBubbleInvitation": {
+                  "status": true
+                }
+              }
+            }
+          ```
+
+          **RealTime:**
+
+          + Пользователь, который отправил приглашение получит уведомление о том что приглашение отклонено.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `notification_added`
+        args:
+          token: |
+            Символьный идентификатор, по которому выполняется поиск пригласительного.
+
+            **Обязательный**
+
+            **Тип:** `String`
+      changeBubbleAvatar:
+        description: |
+          *Заменяет аватар баббла на новый.* В запрос можно передать параметры для обрезания и поворота картики.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          + `Picture file is invalid`
+
+          **Возвращаемое значение:** объект типа `Bubble (BubbleType)`.
+
+          **Пример запроса:**
+          ```
+            mutation changeAva {
+              changeBubbleAvatar(input: {bubble_id: 26, filename: "twitty.png", picture_file: "data:image/png;base64,i..."}) {
+                bubble {
+                  # some Bubble fields
+                  avatar_url
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "changeBubbleAvatar": {
+                  "bubble": {
+                    "avatar_url": "/uploads/avatar/picture/54/twitty.png"
+                  }
+                }
+              }
+            }
+          ```
+
+          **RealTime:**
+
+          + В фиде баббла появится запись об изменении аватарки.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `feed_item_added`
+
+          + Пользователи которые в данный момент находятся на странице баббла получат данные о новой аватарке.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `bubble_avatar_changed`
+
+          + В собственном фиде пользователя, который сменил бабблу аватарку, появится запись об этом событии.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `feed_item_added`
+
+          + Если баббл публичный, то во friends-фиде у каждого друга пользователя, сменившего аватарку, появится запись об этом событии.
+            Если баббл приватный, то во friends-фиде у каждого друга, также являющегося участником этого баббла, появится запись о смене аватарки.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `feed_item_added`
+        args:
+          bubble_id: |
+            Идентификатор баббла, аватарка которого будет изменена.
+
+            **Обязательный**
+
+            **Тип:** `String`
+          picture_file: |
+            Base64 кодированный файл изображения.
+
+            **Обязательный**
+
+            **Тип:** `String`
+          filename: |
+            Имя файла изображения.
+
+            **Тип:** `String`
+          crop_x: |
+            X-координата для обрезания изображения.
+
+            **Тип:** `Integer`
+          crop_y: |
+            Y-координата для обрезания изображения.
+
+            **Тип:** `Integer`
+          crop_w: |
+            Ширина изображения после обрезания.
+
+            **Тип:** `Integer`
+          crop_h: |
+            Высота изображения после обрезания.
+
+            **Тип:** `Integer`
+          rotation_angle: |
+            Угол поворота изображения.
+
+            **Тип:** `Integer`
+      changeBubbleInterests:
+        description: |
+          *Изменяет список интересов у данного баббла.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          + `Something went wrong`
+
+          **Возвращаемое значение:** объект типа `Bubble (BubbleType)`.
+
+          **Пример запроса:**
+          ```
+          mutation changeBInterests {
+            changeBubbleInterests(input: {bubble_id: 10, interests: ["custom", "cars"]}) {
+              bubble {
+                # some Bubble fields
+                interests {
+                  edges {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "changeBubbleInterests": {
+                "bubble": {
+                  "interests": {
+                    "edges": [
+                      {
+                        "node": {
+                          "name": "custom"
+                        }
+                      },
+                      {
+                        "node": {
+                          "name": "cars"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + Пользователи, которые в данный момент находятся на странице баббла, получат новый список интересов.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `bubble_interests_changed`
+        args:
+          bubble_id: |
+            Идентификатор баббла, у которого будет изменен список интересов.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          interests: |
+            Список интересов.
+
+            **Обязательный**
+
+            **Тип:** массив строк `[String]`
+      changeUserInterests:
+        description: |
+          *Изменяет список интересов у текущего пользователя.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Something went wrong`
+
+          **Возвращаемое значение:** объект типа `User (UserType)`.
+
+          **Пример запроса:**
+          ```
+          mutation changeUInterests {
+            changeUserInterests(input: {interests: ["hockey", "cars"]}) {
+              user {
+                # some User fields
+                interests {
+                  edges {
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "changeUserInterests": {
+                "user": {
+                  "interests": {
+                    "edges": [
+                      {
+                        "node": {
+                          "name": "hockey"
+                        }
+                      },
+                      {
+                        "node": {
+                          "name": "cars"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + Пользователи, которые в данный момент просматривают профиль этого юзера, получат новый список его интересов.
+            **Channel:** `profile-page-USER_ID`,
+            **Event:** `user_interests_changed`
+        args:
+          interests: |
+            Список интересов.
+
+            **Обязательный**
+
+            **Тип:** массив строк `[String]`
+      createChatMessage:
+        description: |
+          *Отправляет новое сообщение в чат виджет баббла.* Пользователь должен быть участником этого баббла.
+          Сообщение не должно быть пустым.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Chat widget not found`
+
+          + `Bubble not found`
+
+          + `Message cannot be empty`
+
+          **Возвращаемое значение:** объект типа `Widgets::ChatWidget::Message (Widgets::ChatWidget::MessageType)`.
+
+          **Пример запроса:**
+          ```
+          mutation newChatWidgetMessage {
+            createChatMessage(input: {chat_id: 3, text: "Test message"}) {
+              message {
+                # some chat widget message field
+                text
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "createChatMessage": {
+                "message": {
+                  "text": "Test message"
+                }
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + Пользователи, которые в данный момент находятся на странице чат виджета, получат новое сообщение.
+            **Channel:** `private-chatwidget-CHAT_WIDGET_ID`,
+            **Event:** `message_created`
+        args:
+          chat_id: |
+            Идентификатор чат виджета, в который будет отправлено новое сообщение.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          text: |
+            Текст сообщения.
+
+            **Тип:** `String`
+          picture_file: |
+            Base64 кодированный файл или относительный путь к файлу заранее загруженного на сервер.
+
+            **Тип:** `String`
+          picture_filename: |
+            Имя файла картинки.
+
+            **Тип:** `String`
+          video_id: |
+            Идентификатор заранее загруженного видео. Необходимо использовать ID соответствующего объекта Medium
+
+            **Тип:** `Integer`
+          video_url: |
+            Ссылка на видео с внешнего ресурса. Например `https://www.youtube.com/watch?v=vxuhNmjnK9M`
+
+            **Тип:** `String`
+          link_url: |
+            Веб url внешнего ресурса. Например `https://github.com/`
+
+            **Тип:** `String`
+          link_title: |
+            Заголовок характеризующий внешний ресурс, url которого был добавлен в пост
+
+            **Тип:** `String`
+          link_description: |
+            Короткое описание внешнего ресурса, url которого был добавлен в пост
+
+            **Тип:** `String`
+          link_picture_url: |
+            Url картинки, которая является графической илюстрацией для внешнего ресурса
+
+            **Тип:** `String`
+      removeAttachmentFromChatMessage:
+        description: |
+          *Удаляет медиа файл из сообщения в чат виджете,* если с момента публикации этого сообщения прошло менее 24 часов.
+          Пользователь должен быть автором сообщения или модератором данного баббла.
+          Если сообщение содержало только медиа файл, то сообщение будет удалено.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Message not found`
+
+          **Возвращаемое значение:** объект типа `Widgets::ChatWidget::Message (Widgets::ChatWidget::MessageType)`.
+
+          **Пример запроса:**
+          ```
+          mutation rmAttachmentFromMessage {
+            removeAttachmentFromChatMessage(input: {id: 66}) {
+              message {
+                # some chat widget message fields
+                text
+                medium {
+                  thumb_url
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "removeAttachmentFromChatMessage": {
+                "message": {
+                  "text": "chat img",
+                  "medium": null
+                }
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + Пользователи, которые в данный момент находятся на странице чат виджета, будут уведомлены о изменении сообщения.
+            **Channel:** `private-chatwidget-CHAT_WIDGET_ID`,
+            **Event:** `message_updated`
+
+          + Если в результате сообщение было удалено, то онлайн участники чата получат уведомление об этом.
+            **Channel:** `private-chatwidget-CHAT_WIDGET_ID`,
+            **Event:** `message_destroyed`
+        args:
+          id: |
+            Идентификатор сообщения.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      joinMeToBubble:
+        description: |
+          *Позволяет пользователю самостоятельно присоединиться к публичному бабблу.* Пользователю присваивается роль рядового участника - `guest`.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `User can join this bubble only by invite`
+
+          + `User is already a member of this bubble`
+
+          + `Bubble not found`
+
+          **Возвращаемое значение:** объект типа `Bubble (BubbleType)`.
+
+          **Пример запроса:**
+          ```
+          mutation joinMe {
+            joinMeToBubble(input: {bubble_id: 14}) {
+              bubble {
+                # some bubble fields
+                name
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "joinMeToBubble": {
+                "bubble": {
+                  "name": "Test-1"
+                }
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + Хозяин баббла получит личное уведомление о новом участнике.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `notification_added`.
+
+          + Участники баббла получат краткую информацию о новом участнике.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `member_joined`.
+
+          + В фид баббла будет добавлена запись о присоединении нового участника.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `feed_item_added`.
+
+          + В собственный фид нового участника будет добавлена запись о его присоединении к бабблу.
+            **Channel:** `private-dashboard-USER_ID`,
+            **Event:** `feed_item_added`.
+
+          + Во friends фид друзей нового участника, которые также являются участниками указанного баббла, будет добавлена запись о его присоединении к бабблу.
+            **Channel:** `private-dashboard-USER_ID`,
+            **Event:** `feed_item_added`.
+        args:
+          bubble_id: |
+            Идентификатор баббла.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      disjoinMeFromBubble:
+        description: |
+          *Позволяет пользователю самостоятельно покинуть баббл.* Хозяин баббла не может его покинуть пока не передаст свои полномочия другому пользователю.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `User is not a member of this bubble`
+
+          + `Owner cannot leave the bubble`
+
+          + `Bubble not found`
+
+          **Возвращаемое значение:** объект типа `Bubble (BubbleType)`.
+
+          **Пример запроса:**
+          ```
+          mutation disjoinMe {
+            disjoinMeFromBubble(input: {bubble_id: 1}) {
+              bubble {
+                # some bubble fields
+                name
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "disjoinMeFromBubble": {
+                "bubble": {
+                  "name": "privy"
+                }
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + Хозяин баббла получит личное уведомление о том что пользователь покинул баббл.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `notification_added`.
+
+          + Участники баббла получат краткую информацию о том кто покинул баббл.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `member_left`.
+
+          + В фид баббла будет добавлена запись о том что пользователь покинул баббл.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `feed_item_added`.
+
+          + В собственный фид пользователя будет добавлена запись о том что он покинул баббл.
+            **Channel:** `private-dashboard-USER_ID`,
+            **Event:** `feed_item_added`.
+        args:
+          bubble_id: |
+            Идентификатор баббла.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      changeUserAvatar:
+        description: |
+          *Добавляет новый аватар текущему пользователю и делает его дефолтным.* В запрос можно передать параметры для обрезания и поворота картики.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Picture file is invalid`
+
+          **Возвращаемое значение:** объект типа `User (UserType)`.
+
+          **Пример запроса:**
+          ```
+            mutation changeMyAvatar {
+              changeUserAvatar(input: {filename: "twi.png", picture_file: "data:image/png;base64,i..."}) {
+                user {
+                  # some user fields
+                  avatar_url
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "changeUserAvatar": {
+                  "user": {
+                    "avatar_url": "/uploads/avatar/picture/68/twi.png"
+                  }
+                }
+              }
+            }
+          ```
+
+          **RealTime:**
+
+          + Пользователи которые в данный момент находятся на странице баббла, участником которого является данный пользователь
+            получат данные о новой аватарке этого юзера.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `member_avatar_changed`
+
+          + Друзья пользователя будут уведомлены об изменении его аватарки.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `friend_avatar_changed`
+
+          + Пользователь получит уведомление об изменении его аватарки.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `avatar_changed`
+        args:
+          picture_file: |
+            Base64 кодированный файл изображения.
+
+            **Обязательный**
+
+            **Тип:** `String`
+          filename: |
+            Имя файла изображения.
+
+            **Тип:** `String`
+          crop_x: |
+            X-координата для обрезания изображения.
+
+            **Тип:** `Integer`
+          crop_y: |
+            Y-координата для обрезания изображения.
+
+            **Тип:** `Integer`
+          crop_w: |
+            Ширина изображения после обрезания.
+
+            **Тип:** `Integer`
+          crop_h: |
+            Высота изображения после обрезания.
+
+            **Тип:** `Integer`
+          rotation_angle: |
+            Угол поворота изображения.
+
+            **Тип:** `Integer`
+      destroyMedium:
+        description: |
+          *Удаляет указанный медиа файл.* Пользователь должен быть владельцем/аплоудером этого файла.
+          Чтобы удалить медиа файл из какого-либо баббл виджета, пользователь должен быть менеджером или хозяином соответствующего баббла.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Media file not found`
+
+          **Возвращаемое значение:** статус `Boolean (BooleanType)`.
+
+          **Пример запроса:**
+          ```
+            mutation deleteMedia {
+               destroyMedium(input: {id: 211}) {
+                 status
+               }
+             }
+
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "destroyMedium": {
+                  "status": true
+                }
+              }
+            }
+          ```
+
+          **RealTime:**
+
+          + Если медиа файл был в виджет галерее
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `media_destroyed`
+
+          + Если медиа файл был публичным и находился в галлерее пользователя
+            **Channel:** `profile-page-USER_ID`,
+            **Event:** `media_destroyed`
+
+          + Если медиа файл был частью поста в блог виджете
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `post_updated`
+
+          + Если медиа файл был частью поста на дашборде
+            **Channel:** `private-dashboard-USER_ID`,
+            **Event:** `note_updated`
+
+          + Если медиа файл был частью сообщения в чат виджете
+            **Channel:** `private-chatwidget-CHAT_ID`,
+            **Event:** `message_updated`
+
+          + Если медиа файл был частью сообщения в вилчате (1v1 чат)
+            **Channel:** `private-messages_CHANNEL_NAME`,
+            **Event:** `message_updated`
+
+          + Если медиа файл был частью комментария
+            **Channel:** `global`,
+            **Event:** `comment_updated`
+        args:
+          id: |
+            Идентификатор объекта Medium (обертки над медиа файлом).
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      shareMedium:
+        description: |
+          *Позволяет пользователю добавить/расшарить указанный медиа файл в свой собственный фид.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + прочие ошибки валидации
+
+          **Возвращаемое значение:** статус `Boolean (BooleanType)`.
+
+          **Пример запроса:**
+          ```
+          mutation shareMedia {
+            shareMedium(input: {id: 207}) {
+              status
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "shareMedium": {
+                "status": true
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + В собственном фиде пользователя появляется новая запись о расшаренном медиа файле
+            **Channel:** `private-dashboard-USER_ID`,
+            **Event:** `feed_item_added`
+        args:
+          id: |
+            Идентификатор объекта Medium (обертки над медиа файлом).
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      touchAllNotifications:
+        description: |
+          *Помечает все непрочитанные уведомления как прочитанные.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          **Возвращаемое значение:** статус операции `Boolean`.
+
+          **Пример запроса:**
+          ```
+          mutation clearMissedNotifs {
+            touchAllNotifications(input: {}) {
+              status
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "touchAllNotifications": {
+                "status": true
+              }
+            }
+          }
+          ```
+      destroyBubble:
+        description: |
+          *Удаляет указанный баббл.* Данная операция может быть выполнена только владельцем соответствующего баббла.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          **Возвращаемое значение:** статус операции `Boolean`.
+
+          **Пример запроса:**
+          ```
+          mutation rmBubble {
+            destroyBubble(input: {id: 20}) {
+              status
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "destroyBubble": {
+                "status": true
+              }
+            }
+          }
+          ```
+        args:
+          id: |
+            Идентификатор баббла.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      kickMemberFromBubble:
+        description: |
+          *Позволяет модератору удалить одного из участников данного баббла.* Хозяин баббла не может его покинуть пока не передаст свои полномочия другому пользователю.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `User is not a moderator of this bubble`
+
+          + `Owner cannot leave the bubble`
+
+          + `Member not found`
+
+          + `Bubble not found`
+
+          **Возвращаемое значение:** статус `Boolean`.
+
+          **Пример запроса:**
+          ```
+          mutation kickMember {
+            kickMemberFromBubble(input: {bubble_id: 3, member_id: 5}) {
+              status
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "kickMemberFromBubble": {
+                "status": true
+              }
+            }
+          }
+          ```
+
+          **RealTime:**
+
+          + Хозяин баббла получит личное уведомление о том что пользователь покинул баббл.
+            **Channel:** `private-user-USER_ID`,
+            **Event:** `notification_added`.
+
+          + Участники баббла получат краткую информацию о том кто покинул баббл.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `member_left`.
+
+          + В фид баббла будет добавлена запись о том что пользователь покинул баббл.
+            **Channel:** `private-bubble-BUBBLE_PERMALINK`,
+            **Event:** `feed_item_added`.
+
+          + В собственный фид пользователя будет добавлена запись о том что он покинул баббл.
+            **Channel:** `private-dashboard-USER_ID`,
+            **Event:** `feed_item_added`.
+        args:
+          bubble_id: |
+            Идентификатор баббла.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          member_id: |
+            Идентификатор пользователя, которого необходимо удалить из баббла.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      updateBubble:
+        description: |
+          *Изменяет данные об указанном баббле.* Данная операция может быть выполнена только модераторами соответствующего баббла.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Bubble not found`
+
+          + `User is not a moderator of this bubble`
+
+          **Возвращаемое значение:** объект типа `Bubble (BubbleType)`..
+
+          **Пример запроса:**
+          ```
+          mutation updateMyBubble {
+            updateBubble(input:{ id: 3, name: "empty", type: "private",
+              avatar: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAABvFBMVEX////J5/ZfueY2p983p984qOA1p99ZtuW/4/WByOsenNsypd8zpt8gndxsvujJ6PY3p+Ahnty33/NfueU0pt9NsOIxpd4rot4qod0sot4xpd8vpN4intxku+eb0++s2/KZ0u9euOYwpN43qOAto94uo94+quAso94ln91nvOf5/P1at+Ujn9wmoN0jntyHyuzE5fYrot3w+f2Fyeskn9yMze2Y0u694vRIruI1pt85qOB7xepxwegYmttXteRgueWc0+8fndzv+Pyz3vOf1fBku+bZ7vgood1Kr+J2w+kpod1Ir+KY0e9+xuonoN39/v6m2PBEreGIy+x0wukloN31+v2y3fODyOtYtuR6xOpzwukRl9nW7fhvwOl5w+rQ6vfi8/pVtORTtOT1+/0hndyOzu3e8fljuuYxpN4ln9zL6PbM6PeRz+3p9fv+/v59xuqPzu3b7/l/xuus2vL0+v1Jr+Izpd+13vNPsuNKsOOu2/L9/v9Aq+FeueaMzO2Y0u/2+/274fRovefx+fzZ7vlRs+ROsuOz3fOr2vFFruJ3w+nA4/Wt2/KX0e5ywekooN1HruKp2fFct+ZMseMmAgtoAAACEUlEQVRIx9XVaVfTQBQG4Cu5UypJkWC0pKkoMdi6pIjGJW5YWapBi4pW3FFx3zfccF8RFdQ/bChymmVuT+Lxg77fkpnnZObOnFwAWNAgIIsUTDQmwc3CJjGicI2UagZY1NQSFVQjt8JiMZZgyhKIuo+agbiCMYgt/lOCS9NtamauQMgjiUDxUMsua1++okPWcaVgdGKYJFblfAbzq6GaNWvXmYWu9d0hgoUNGy3P3UFzE8xn8xaArXqI2NsAtmdr39E7wJsdO3cpQZLpcQd2F+ffY2qPV/T2Qb8YIv2zQwN2Sag+SnvBn31OaGHS4NzQ/rwjucvrPOAXzeVwxTA/9Hv04KFiyTAP+8TwEd65qLVJRyvHRo77yAmNc/oonTwFZE7rHKKfOdswSpJzIoeI56FONIG3MLOOuDDGvcnqRZpUHC7BsUskuXyFS5hw9RpFUsgnTCmMXOeKGyojiHkTbnFJSaAIVefbOUaRFvMOT9yVkSQMrWEO0RVGE4ZG9737D/zioc7qkvG888gvHucYRSTDSJflJ0/94NmEwSgiPe978TL5KrCN1+UMIwlqb94G9/3uvSUwmrg/U/nDR8/8oU+DWX4T9WwfRac4+bm9MjX15eu3iWLbONGtAhVTtLQzXXJUTaGb7j/QX/4e+YMmnohrbGiUYooZSKbiEeu72wZkJTqwrR+zt6n1Z2Rjz7jf+AUu/GAb29DRTAAAAABJRU5ErkJggg==",
+              interests: ["test", "hockey"]
+            }) {
+              bubble {
+                # some bubble fields
+                id
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "updateBubble": {
+                "bubble": {
+                  "id": "3"
+                }
+              }
+            }
+          }
+          ```
+        args:
+          id: |
+            Идентификатор баббла.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          name: |
+            Название баббла.
+
+            **Тип:** `String`
+          zip_code: |
+            Почтовый код баббла.
+
+            **Тип:** `String`
+          description: |
+            Описание баббла.
+
+            **Тип:** `String`
+          type: |
+            Тип баббла.
+
+            **Возможные значения:**
+
+            + `private` - баббл будет приватным
+
+            + `public` - баббл будет публичным
+          avatar: |
+            Base64 кодированный файл изображения.
+
+            **Тип:** `String`
+          avatar_filename: |
+            Имя файла изображения.
+
+            **Тип:** `String`
+          interests: |
+            Список интересов.
+
+            **Тип:** массив строк `[String]`
+          cover_image: |
+            Base64 кодированный файл изображения.
+
+            **Тип:** `String`
+      destroySharedActivity:
+        description: |
+          *Удаляет расширенную активность из собственного фида пользователя.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Shared activity not found`
+
+          **Возвращаемое значение:** статус операции `Boolean`.
+
+          **Пример запроса:**
+          ```
+            mutation destroySharedActivity {
+              destroySharedActivity(input: {id: 19}) {
+                status
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "destroySharedActivity": {
+                  "status": true
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор активности.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      updateUser:
+        description: |
+          *Изменяет данные в профиле текущего пользователя.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + Прочие ошибки валидации
+
+          **Возвращаемое значение:** объект типа `User (UserType)`.
+
+          **Пример запроса:**
+          ```
+          mutation updateMe {
+            updateUser(input:{ username: "alex", first_name: "Alexander"
+              avatar: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAABvFBMVEX////J5/ZfueY2p983p984qOA1p99ZtuW/4/WByOsenNsypd8zpt8gndxsvujJ6PY3p+Ahnty33/NfueU0pt9NsOIxpd4rot4qod0sot4xpd8vpN4intxku+eb0++s2/KZ0u9euOYwpN43qOAto94uo94+quAso94ln91nvOf5/P1at+Ujn9wmoN0jntyHyuzE5fYrot3w+f2Fyeskn9yMze2Y0u694vRIruI1pt85qOB7xepxwegYmttXteRgueWc0+8fndzv+Pyz3vOf1fBku+bZ7vgood1Kr+J2w+kpod1Ir+KY0e9+xuonoN39/v6m2PBEreGIy+x0wukloN31+v2y3fODyOtYtuR6xOpzwukRl9nW7fhvwOl5w+rQ6vfi8/pVtORTtOT1+/0hndyOzu3e8fljuuYxpN4ln9zL6PbM6PeRz+3p9fv+/v59xuqPzu3b7/l/xuus2vL0+v1Jr+Izpd+13vNPsuNKsOOu2/L9/v9Aq+FeueaMzO2Y0u/2+/274fRovefx+fzZ7vlRs+ROsuOz3fOr2vFFruJ3w+nA4/Wt2/KX0e5ywekooN1HruKp2fFct+ZMseMmAgtoAAACEUlEQVRIx9XVaVfTQBQG4Cu5UypJkWC0pKkoMdi6pIjGJW5YWapBi4pW3FFx3zfccF8RFdQ/bChymmVuT+Lxg77fkpnnZObOnFwAWNAgIIsUTDQmwc3CJjGicI2UagZY1NQSFVQjt8JiMZZgyhKIuo+agbiCMYgt/lOCS9NtamauQMgjiUDxUMsua1++okPWcaVgdGKYJFblfAbzq6GaNWvXmYWu9d0hgoUNGy3P3UFzE8xn8xaArXqI2NsAtmdr39E7wJsdO3cpQZLpcQd2F+ffY2qPV/T2Qb8YIv2zQwN2Sag+SnvBn31OaGHS4NzQ/rwjucvrPOAXzeVwxTA/9Hv04KFiyTAP+8TwEd65qLVJRyvHRo77yAmNc/oonTwFZE7rHKKfOdswSpJzIoeI56FONIG3MLOOuDDGvcnqRZpUHC7BsUskuXyFS5hw9RpFUsgnTCmMXOeKGyojiHkTbnFJSaAIVefbOUaRFvMOT9yVkSQMrWEO0RVGE4ZG9737D/zioc7qkvG888gvHucYRSTDSJflJ0/94NmEwSgiPe978TL5KrCN1+UMIwlqb94G9/3uvSUwmrg/U/nDR8/8oU+DWX4T9WwfRac4+bm9MjX15eu3iWLbONGtAhVTtLQzXXJUTaGb7j/QX/4e+YMmnohrbGiUYooZSKbiEeu72wZkJTqwrR+zt6n1Z2Rjz7jf+AUu/GAb29DRTAAAAABJRU5ErkJggg==",
+              interests: ["test", "hockey"]
+            }) {
+              user {
+                # some user fields
+                id
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "updateUser": {
+                "user": {
+                  "id": "3"
+                }
+              }
+            }
+          }
+          ```
+        args:
+          username: |
+            Логин/ник польователя на сайте.
+
+            **Тип:** `String`
+          first_name: |
+            Имя пользователя.
+
+            **Тип:** `String`.
+          gender: |
+            Пол данного пользователя.
+
+            **Тип:** `String`.
+
+            **Возможные значения:**
+
+            + `male`
+
+            + `female`
+
+            + `nil`
+          zip_code: |
+            Почтовый индекс пользователя.
+
+            **Тип:** `String`
+          phone: |
+            Телефонный номер пользователя.
+
+            **Тип:** `String`.
+          birthday: |
+            Дата дня рождения пользователя. Используется следующий формат: 'yyyy-mm-dd'
+
+            **Тип:** `String`.
+          language: |
+            Язык который пользователь предпочитает использовать.
+
+            **Тип:** `String`.
+          description: |
+            Короткая биография / произвольная информация о пользователе.
+
+            **Тип:** `String`.
+          avatar: |
+            Base64 кодированный файл изображения.
+
+            **Тип:** `String`
+          avatar_filename: |
+            Имя файла изображения.
+
+            **Тип:** `String`
+          interests: |
+            Список интересов.
+
+            **Тип:** массив строк `[String]`
+          cover_image: |
+            Base64 кодированный файл изображения.
+
+            **Тип:** `String`
+      readWheelChatMessage:
+        description: |
+          *Помечает сообщение вилчата как прочитанное получателем.*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Message not found`
+
+          **Возвращаемое значение:** объект типа  `WheelChat::MessageType`.
+
+          **Пример запроса:**
+          ```
+            mutation readMsg {
+              readWheelChatMessage(input: {id: 327}) {
+                message {
+                  text
+                  read_at
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "readWheelChatMessage": {
+                  "message": {
+                    "text": "some text",
+                    "read_at": "2017-03-06 11:56:26 UTC"
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор вилчат сообщения.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+

@@ -1,0 +1,3 @@
+rm public/assets/application_static*
+rm public/assets/*-bundle.js
+bundle exec rake assets:precompile

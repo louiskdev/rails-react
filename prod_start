@@ -1,0 +1,11 @@
+bundle install
+npm install
+ps aux | grep puma | awk '{print $2}' | xargs sudo kill
+# kill resque workers
+ps ax | grep resque | awk '{print $1}' | xargs sudo kill
+RAILS_ENV=production bundle exec rake db:migrate
+rm public/assets/application_static*
+rm public/assets/*-bundle.js
+bundle exec rake assets:precompile
+BACKGROUND=yes QUEUE=* rake environment resque:work
+RAILS_ENV=production bundle exec puma -C config/puma.rb -d

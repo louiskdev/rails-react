@@ -1,0 +1,256 @@
+@media (min-width: 50em) {
+ .footer .vUdKHHlLkgiLAA1TuA45P {
+   -webkit-flex-basis: 25%;
+   -ms-flex-preferred-size: 25%;
+   flex-basis: 25%;
+   max-width: 25%;
+ }
+}
+
+@media (max-width: 1170px) {
+  .app-search-wrapper {
+    padding: 0 140px 0 110px;
+  }
+  .bg-dashboard {
+    padding: 0 140px 0 110px;
+  }
+
+  .app-menu-expand {
+    left: 48px;
+    top: 12px;
+  }
+  .myb-dashboard-left.short-style {
+    width: 0;
+    padding: 0;
+  }
+  .myb-messages-box {
+    .dialog {
+      width: calc(100% - 260px);
+      margin-left: 4px;
+    }
+    .users {
+      width: 250px;
+    }
+  }
+
+  .hiw-page {
+    .features-section {
+      .features-overview {
+        .features-slider {
+          .tab-content-item {
+            &.active {
+              .illustration-wrapper {
+                width: 100%;
+                &:before {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+        .features-special {
+          width: 100%;
+        }
+      }
+    }
+    .additional-section {
+      .lt-wrapper {
+        width: 100%;
+        .additional-overview {
+          width: 100%;
+          padding-bottom: 40px;
+          .separator {
+            display: none;
+          }
+          .private-feature,
+          .rate-feature {
+            padding: 40px;
+            width: 50%;
+            margin-right: 0;
+            margin-left: 0;
+          }
+        }
+      }
+    }
+    .signup-section {
+      .lt-wrapper {
+        width: 100%;
+        .signup-overview {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .fb-invite-button {
+    min-width: 50px!important;
+    margin: 8px 0 0 16px!important;
+    width: 50%!important;
+    span {
+      display: none!important;
+    }
+    svg {
+      margin-left: 0px!important;
+    }
+  }
+  .myb-chatbar {
+    width: 76px;
+    .leftbar-title {
+      padding: 0 18px 8px;
+      text-align: center;
+    }
+    .chatbar-users, .bubbles, .user-interests {
+      padding-bottom: 36px;
+    }
+    .chatbar-user {
+      display: block;
+      width: 35px;
+      padding: 8px 22px;
+    }
+    .chatbar-search, .view-all {
+      top: auto;
+      bottom: 4px;
+    }
+    .view-all, .add-interest {
+      position: absolute;
+      left: 4px;
+      width: 100%;
+      display: block;
+      text-align: center;
+    }
+    .myb-feed {
+      padding: 8px 22px;
+      .bubble-counter {
+        span {
+          top: -8px;
+        }
+      }
+      svg {
+        top: 4px!important;
+        right: 12px!important;
+      }
+    }
+    .first-name, .myb-feed-label {
+      display: none;
+    }
+    .user-interests {
+      .leftbar-title {
+        margin-bottom: 20px;
+        position: relative;
+        .add-interest {
+          bottom: -12px;
+        }
+      }
+    }
+    .interests-wrapper {
+      padding: 0 14px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .current-user-info, .bg-dashboard.my-profile {
+    padding: 0 100px 0 76px;
+  }
+}
+
+@media (min-width: 992px) {
+  .myb-dashboard {
+    .myb-dashboard-row {
+      position: relative;
+    }
+    .myb-dashboard-left {
+      flex-grow: 2.2;
+      flex-basis: 0;
+    }
+    .myb-dashboard-center {
+      flex-grow: 6.7;
+      flex-basis: 0;
+    }
+    .myb-dashboard-right {
+      flex-grow: 2.8;
+      flex-basis: 0;
+    }
+    .myb-dashboard-center-without-right {
+      flex-grow: 9.5;
+      flex-basis: 0;
+    }
+  }
+}
+
+@media (max-width: 980px) {
+  .current-user-info, .bg-dashboard.my-profile {
+    padding: 0 100px 0 20px;
+  }
+
+  .myb-messages-box {
+    .dialog, .channels-area {
+      right: 96px;
+      width: calc(100% - 380px);
+    }
+    .users, .chat-area {
+      width: 210px;
+      left: 70px;
+    }
+    .chat-area {
+      left: 0;
+    }
+  }
+  .stat-block {
+    width: 250px !important;
+  }
+  .current-user-info {
+    .user-gallery {
+      width: 250px;
+      height: 250px;
+      overflow: hidden;
+    }
+  }
+
+  .gallery {
+    left: 70px;
+    width: calc(100% - 160px);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .current-user-info, .bg-dashboard.my-profile {
+    padding: 0px 76px 0 56px;
+  }
+  .app-menubar-logo {
+    margin-right: 4px;
+  }
+  .app-menubar-item {
+    padding: 0 5px;
+  }
+  .myb-dashboard {
+    .myb-dashboard-row {
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .myb-dashboard-left {
+      flex-grow: 2.2;
+      flex-basis: 0;
+    }
+    .myb-dashboard-center {
+      max-width: 480px;
+      flex-grow: 6.7;
+      flex-basis: 0;
+    }
+    .myb-dashboard-right,
+    .myb-dashboard-center-without-right {
+      flex-grow: 1;
+      flex-basis: 100%;
+    }
+  }
+  .current-user-info, .bg-dashboard.my-profile {
+    .myb-dashboard-center-without-right {
+      -webkit-box-flex: 9.5;
+      -webkit-flex-grow: 9.5;
+      -ms-flex-positive: 9.5;
+      flex-grow: 9.5;
+      -webkit-flex-basis: 0;
+      -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+    }
+  }
+}

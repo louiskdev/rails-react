@@ -1,0 +1,1065 @@
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ru:
+  graphql:
+    queries:
+      postsFromBlog:
+        description: |
+          *Возвращает все посты из указанного блога* в виде объектов-активностей, которые обычно используются в фидах.
+          Запрос дополнительно возвращает поле `unread_activities_count` - число новых еще непросмотренных
+          пользователем записей в данном блоге. Доступ непосредственно к данным поста осуществляется через поле `o_post`.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Blog not found`
+
+          **Возвращаемое значение:** массив объектов `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+            query getPosts {
+              postsFromBlog(blog_id: 3, first: 2) {
+                edges {
+                  node {
+                    # some activity fields
+                    o_post {
+                      # some post fields
+                      text
+                      medium {
+                        thumb_url
+                      }
+                      author {
+                        username
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "postsFromBlog": {
+                  "edges": [
+                    {
+                      "node": {
+                        "o_post": {
+                          "text": "blog!!",
+                          "medium": null,
+                          "author": {
+                            "username": "alex-01"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "node": {
+                        "o_post": {
+                          "text": "another test",
+                          "medium": null,
+                          "author": {
+                            "username": "dog"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ```
+        args:
+          blog_id: |
+            Идентификатор блог-виджета
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          privacy: |
+            Позволяет фильтровать результат в соответствии с выбранным режимом приватности
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `public` - только публичные посты
+
+            + `friends` - только посты друзей
+
+            + `private` - только приватные посты
+
+            + `nil` - фильтр не применяется
+          sort_by: |
+            Позволяет сортировать результат
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `newest` (default) - по дате создания в порядке убывания
+
+            + `rating` - по рейтингу в порядке убывания
+
+            + `favorite` - только избранные посты
+
+      postFromBlog:
+        description: |
+          *Находит пост по ID и возвращает связанную с ним базовую активность.*
+          Доступ непосредственно к данным поста осуществляется через поле `o_post`.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Post not found`
+
+          **Возвращаемое значение:** объект типа `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+            query getPost {
+              postFromBlog(id: 105) {
+                # some activity fields
+                o_post {
+                  # some post fields
+                  text
+                  medium {
+                    thumb_url
+                  }
+                  author {
+                    username
+                  }
+                }
+              }
+            }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+            {
+              "data": {
+                "postFromBlog": {
+                  "o_post": {
+                    "text": "another test",
+                    "medium": null,
+                    "author": {
+                      "username": "dog"
+                    }
+                  }
+                }
+              }
+            }
+          ```
+        args:
+          id: |
+            Идентификатор поста
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+
+      bubble_feed:
+        description: |
+          *Возвращает фид указанного баббла,* а именно массив активностей (элементов фида).
+          Запрос дополнительно возвращает поле `unread_activities_count` - число новых еще непросмотренных
+          пользователем записей в данном фиде.
+          Из каждой активности можно получить данные непосредственно об интересующем объекте (например посте).
+          Для этого можно обратится к полю `object` указав необходимые фрагменты:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          или воспользоваться специальными полями `o_blabla`, где blabla - требуемый тип:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `User has incomplete profile`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          **Возвращаемое значение:** массив объектов типа `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+          query getBubbleFeed {
+            bubble_feed(permalink: "GKav366t", first: 2) {
+              edges {
+                node {
+                  name
+                  user_friendly_name
+                  object {
+                    ... on Post {
+                      text
+                    }
+                    ... on Medium {
+                      thumb_url
+                    }
+                    ... on Bubble {
+                      permalink
+                    }
+                    ... on Album {
+                      name
+                    }
+                  }
+
+                  o_post {
+                    text
+                  }
+                  o_medium {
+                    thumb_url
+                  }
+                  o_bubble {
+                    permalink
+                  }
+                  o_album {
+                    name
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "bubble_feed": {
+                "edges": [
+                  {
+                    "node": {
+                      "name": "blogs.create_post",
+                      "user_friendly_name": "wrote a post on",
+                      "object": {
+                        "text": "Updated post"
+                      },
+                      "o_post": {
+                        "text": "Updated post"
+                      },
+                      "o_medium": null,
+                      "o_bubble": null,
+                      "o_album": null
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "media.put_media",
+                      "user_friendly_name": "uploaded a new video/image to gallery",
+                      "object": {
+                        "thumb_url": "/uploads/attachments/picture/file/46/thumb_six.jpg_show.jpeg"
+                      },
+                      "o_post": null,
+                      "o_medium": {
+                        "thumb_url": "/uploads/attachments/picture/file/46/thumb_six.jpg_show.jpeg"
+                      },
+                      "o_bubble": null,
+                      "o_album": null
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          permalink: |
+            Символьный идентификатор поста, используемый в url.
+
+            **Обязательный**
+
+            **Тип:** `String`
+          privacy: |
+            Позволяет фильтровать результат в соответствии с выбранным режимом приватности.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `public` - только публичные посты
+
+            + `friends` - только посты друзей
+
+            + `private` - только приватные посты
+
+            + `nil` - фильтр не применяется
+          sort_by: |
+            Позволяет сортировать результат.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `newest` (default) - по дате создания в порядке убывания
+
+            + `rating` - по рейтингу в порядке убывания
+
+            + `favorite` - только избранные посты
+
+      my_feed:
+        description: |
+          *Возвращает фид текущего пользователя,* а именно массив активностей (элементов фида).
+          Из каждой активности можно получить данные непосредственно об интересующем объекте (например посте).
+          Для этого можно обратится к полю `object` указав необходимые фрагменты:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          или воспользоваться специальными полями `o_blabla`, где blabla - требуемый тип:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          **Возвращаемое значение:** массив объектов типа `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+          query getMyFeed {
+            my_feed(first: 2) {
+              edges {
+                node {
+                  # some activity fields
+                  name
+                  created_at
+                  o_note {
+                    text
+                  }
+                	object {
+                    ... on Note {
+                      text
+                    }
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "my_feed": {
+                "edges": [
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "created_at": "2016-08-30 09:48:23 UTC",
+                      "o_note": {
+                        "text": null
+                      },
+                      "object": {
+                        "text": null
+                      }
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "created_at": "2016-08-30 09:47:47 UTC",
+                      "o_note": {
+                        "text": "vxvx :innocent:"
+                      },
+                      "object": {
+                        "text": "vxvx :innocent:"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          privacy: |
+            Позволяет фильтровать результат в соответствии с выбранным режимом приватности.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `public` - только публичные посты
+
+            + `private` - только приватные посты
+
+            + `nil` - фильтр не применяется
+          sort_by: |
+            Позволяет сортировать результат.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `newest` (default) - по дате создания в порядке убывания
+
+            + `rating` - по рейтингу в порядке убывания
+
+            + `favorite` - только избранные посты
+
+      friends_feed:
+        description: |
+          *Возвращает фид друзей текущего пользователя,* а именно массив активностей (элементов фида).
+          Запрос дополнительно возвращает поле `unread_activities_count` - число новых еще непросмотренных
+          пользователем записей в данном фиде.
+          Из каждой активности можно получить данные непосредственно об интересующем объекте (например посте).
+          Для этого можно обратится к полю `object` указав необходимые фрагменты:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          или воспользоваться специальными полями `o_blabla`, где blabla - требуемый тип:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          **Возвращаемое значение:** массив объектов типа `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+          query getFriendsFeed {
+            friends_feed(first: 2) {
+              unread_activities_count
+              edges {
+                node {
+                  # some activity fields
+                  name
+                  object {
+                    ... on Post {
+                      text
+                    }
+                  }
+                  o_post {
+                    text
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "friends_feed": {
+                "unread_activities_count": 0,
+                "edges": [
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "object": {},
+                      "o_post": null
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "notes.create",
+                      "object": {},
+                      "o_post": null
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          privacy: |
+            Позволяет фильтровать результат в соответствии с выбранным режимом приватности.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `public` - только публичные посты
+
+            + `private` - только приватные посты
+
+            + `nil` - фильтр не применяется
+          sort_by: |
+            Позволяет сортировать результат.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `newest` (default) - по дате создания в порядке убывания
+
+            + `rating` - по рейтингу в порядке убывания
+
+            + `favorite` - только избранные посты
+          touch: |
+            Позволяет пометить элементы фида как просмотренные.
+
+            **Тип:** `Boolean`
+
+            **Возможные значения:**
+
+            + `true` (default) - элементы фида будут отмечены как просмотренные
+
+            + `false` - элементы фида **не будут** отмечены как просмотренные
+
+      user_feed:
+        description: |
+          *Возвращает фид из публичных записей указанного пользователя.* Если запрашиваемый пользователь не является другом,
+          то запрос вернет пустой массив.
+          Из каждой активности можно получить данные непосредственно об интересующем объекте (например посте).
+          Для этого можно обратится к полю `object` указав необходимые фрагменты:
+          ```
+          object {
+            ... on Post {
+              # text
+            }
+            ... on Medium {
+              # thumb_url
+            }
+          }
+          ```
+          или воспользоваться специальными полями `o_blabla`, где blabla - требуемый тип:
+          ```
+          o_post {
+            # text
+          }
+          o_medium {
+            # thumb_url
+          }
+          ```
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `User not found`
+
+          + `Access denied`
+
+          **Возвращаемое значение:** массив объектов типа `Activity (ActivityType)`.
+
+          **Пример запроса:**
+          ```
+          query getUserFeed {
+            user_feed(first: 2, username: "alex-02") {
+              edges {
+                node {
+                  #some activity fields
+                  created_at
+                  object {
+                    ... on Note {
+                      text
+                    }
+                  }
+                  o_note {
+                    text
+                  }
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "user_feed": {
+                "edges": [
+                  {
+                    "node": {
+                      "created_at": "2016-05-31 13:07:06 UTC",
+                      "object": {
+                        "text": "gooood morning"
+                      },
+                      "o_note": {
+                        "text": "gooood morning"
+                      }
+                    }
+                  },
+                  {
+                    "node": {
+                      "created_at": "2016-05-20 12:59:33 UTC",
+                      "object": {
+                        "text": "world"
+                      },
+                      "o_note": {
+                        "text": "world"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          username: |
+            Ник (username) пользователя.
+
+            **Обязательный**
+
+            **Тип:** `String`
+          sort_by: |
+            Позволяет сортировать результат.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `newest` (default) - по дате создания в порядке убывания
+
+            + `rating` - по рейтингу в порядке убывания
+
+      availableWidgets:
+        description: |
+          *Запрос возвращает перечень доступных виджетов, которые можно активировать в баббле.*
+
+          **Возвращаемое значение:** массив строк `String`.
+
+          **Пример запроса:**
+          ```
+          query getWidgetsList {
+            availableWidgets
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "availableWidgets": [
+                "Blog",
+                "Chat",
+                "Gallery"
+              ]
+            }
+          }
+          ```
+      galleryWidgetAlbums:
+        description: |
+          *Возвращает список альбомов, которые есть в данной галерее-виджете.* Если галерея принадлежит приватному бабблу
+          и текущий пользователь не является его участником, то ему будет отказано в доступе.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          + `Bubble has no gallery widget`
+
+          **Возвращаемое значение:** массив объектов типа `Album (AlbumType)`.
+
+          **Пример запроса:**
+          ```
+          query getAlbumsFromGalleryWidget {
+            galleryWidgetAlbums(bubble_id: 9, first:10) {
+              edges {
+                node {
+                  # some Album fields
+                  name
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "galleryWidgetAlbums": {
+                "edges": [
+                  {
+                    "node": {
+                      "name": "X-men"
+                    }
+                  },
+                  {
+                    "node": {
+                      "name": "album #1"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          bubble_id: |
+            Идентификатор баббла, из галереи которого надо получить список альбомов.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+      myNotifications:
+        description: |
+          *Позволяет получить уведомления адресованные текущему пользователю.*
+          Дополнительно данный запрос позволяет получить число непрочитанных/пропущенных уведомлений `unread_notifications_count`.
+
+          **Возвращаемое значение:** массив объектов типа `Notification (NotificationType)`.
+
+          **Пример запроса:**
+          ```
+          query getMyNotifs {
+            myNotifications(status: "unread") {
+              unread_notifications_count
+              edges {
+                node {
+                  # some Notification fields
+                  id
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "myNotifications": {
+                "unread_notifications_count": 10,
+                "edges": [
+                  {
+                    "node": {
+                      "id": "328"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "316"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          status: |
+            Позволяет фильтровать уведомления по признаку прочитанное/непрочитанное.
+
+            **Тип:** `String`
+
+            **Возможные значения:**
+
+            + `read` - будут возвращены только ранее прочитанные уведомления.
+
+            + `unread`  - будут возвращены только непрочитанные уведомления
+
+            Если параметр отсутствует, то данная характеристика не будет учитываться.
+      bubbleMembers:
+        description: |
+          *Возвращает список участников данного баббла.* Если баббл является приватным и текущий пользователь
+          не является его участником, то ему будет отказано в доступе.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Bubble not found`
+
+          **Возвращаемое значение:** массив объектов типа `User (UserType)`.
+
+          **Пример запроса:**
+          ```
+          query getBubbleMembers {
+            bubbleMembers(bubble_id: 10, keyword: "lex") {
+              edges {
+                node {
+                  # some User fields
+                  username
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "bubbleMembers": {
+                "edges": [
+                  {
+                    "node": {
+                      "username": "alex-02"
+                    }
+                  },
+                  {
+                    "node": {
+                      "username": "alex-01"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          bubble_id: |
+            Идентификатор баббла.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          keyword: |
+            Позволяет отфильтровать результат в соответствии с переданным шаблоном
+
+            **Тип:** `String`
+      mediaFromGallery:
+        description: |
+          *Возвращает список медиа файлов загруженных в данную галерею.* Пользователь должен быть участником соответствующего баббла.
+          Запрос позволяет дополнительно получить данные об альбоме и баббле.
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `Access denied`
+
+          + `Gallery not found`
+
+          + `Album not found`
+
+          **Возвращаемое значение:** массив объектов типа `Medium (MediumType)`.
+
+          **Пример запроса:**
+          ```
+          query getGalleryMedia {
+            mediaFromGallery(gallery_id: 3, only_my_media: true, album_id: 1, first: 1) {
+              album {
+                # some album fields
+                name
+              }
+              bubble {
+                # some bubble fields
+                name
+              }
+              edges {
+                node {
+                  # some medium fields
+                  thumb_url
+                }
+              }
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "mediaFromGallery": {
+                "album": {
+                  "name": "album #1"
+                },
+                "bubble": {
+                  "name": "FULL-33180"
+                },
+                "edges": [
+                  {
+                    "node": {
+                      "thumb_url": "/uploads/attachments/picture/file/66/thumb_pict.png"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          ```
+        args:
+          gallery_id: |
+            Идентификатор галереи.
+
+            **Обязательный**
+
+            **Тип:** `Integer`
+          album_id: |
+            Идентификатор альбома. Позволяет вернуть только медиа файлы из указанного альбома.
+
+            **Тип:** `Integer`
+          only_my_media: |
+            Флаг позволяющий вернуть только медиа файлы загруженные текущим пользователем.
+
+            **Тип:** `Boolean`
+      checkConfirmationToken:
+        description: |
+          *Позволяет проверить **confirmation token** полученный пользователем по имейлу в процессе регистрации.*
+
+          **Возвращаемое значение:** `String`.
+
+          Возможные значения:
+
+          + `Invalid` - неизвестный токен
+
+          + `Confirmed` - токен уже был использован для подтверждения аккаунта
+
+          + `Ok` - токен верный и может быть использован
+
+          **Пример запроса:**
+          ```
+          query checkToken {
+            checkConfirmationToken(token: "7eQyvNzArp8-tGqJgxvJ")
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "checkConfirmationToken": "Ok"
+            }
+          }
+          ```
+        args:
+          token: |
+            Специальная строка-токен, которая используется для подтверждения пользовательского имейла во время регистрации на сайте.
+
+            **Тип:** `String`
+      checkUserByInvitationToken:
+        description: |
+          *Запрос позволяет проверить зарегистрирован ли на сайте пользователь, который получил приглашение в баббл.*
+          Проверка выполняется по токену, который был в пригласительном имейле. Если имейл на который пришло приглашение
+          уже зарегистрирован в системе, то запрос вернет ошибку, иначе будет возвращена строка-токен (`confirmation token`).
+          Запрос может вернуть ошибки:
+
+          + `Invalid token`
+
+          + `Invitation already accepted`
+
+          + `Invitation already declined`
+
+          + `Invalid invitation`
+
+          + `User has completed profile`
+
+          + `Unknown invitation state`
+
+          **Возвращаемое значение:** `String`.
+
+          **Пример запроса:**
+          ```
+          query check {
+            checkUserByInvitationToken(token: "DJsxA2uQTxgWQyt3v2iU")
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "checkUserByInvitationToken": null
+            }
+          }
+          ```
+        args:
+          token: |
+            Специальная строка-токен, которая является параметром ссылки из пригласительного имейла.
+
+            **Обязательный**
+
+            **Тип:** `String`
+      bubbleCounters:
+        description: |
+          *Позволяет получить значения счетчиков количества непрочитанных пользователем записей для разных структурных элементов баббла*
+          Запрос может вернуть ошибки:
+
+          + `User is unauthorized`
+
+          + `User has incomplete profile`
+
+          + `Bubble not found`
+
+          + `Access denied`
+
+          **Возвращаемое значение:** объект типа `BubbleCountersData`.
+
+          **Пример запроса:**
+          ```
+          query getBubbleCounters {
+            bubbleCounters(permalink: "GKav366t") {
+              feed_unread_items_count
+              chat_unread_items_count
+              gallery_unread_items_count
+              blog_unread_items_count
+              events_unread_items_count
+              total_unread_items_count
+            }
+          }
+          ```
+
+          **Пример ответа сервера:**
+          ```
+          {
+            "data": {
+              "bubbleCounters": {
+                "feed_unread_items_count": 2,
+                "chat_unread_items_count": 0,
+                "gallery_unread_items_count": 0,
+                "blog_unread_items_count": 1,
+                "events_unread_items_count": 0,
+                "total_unread_items_count": 2
+              }
+            }
+          }
+          ```
+        args:
+          permalink: |
+            Символьный идентификатор баббла, используемый в url.
+
+            **Обязательный**
+
+            **Тип:** `String`
+

@@ -1,0 +1,101 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+  font-family: $font-stack;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0,0,0,.87);
+  background-color: $white-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $white-color;
+  font-weight: $weight-light;
+  margin: 0;
+  line-height: 1.1;
+  b {
+    color: $brand-primary-light;
+    font-weight: 400;
+  }
+}
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
+p {
+  line-height: 1.6;
+  font-size: 18px;
+  font-weight: 300;
+  margin: 16px 0;
+  color: $white-color;
+}
+b {
+  color: #2f3b4d;
+  font-weight: $weight-bold;
+}
+iframe {
+  border: none;
+}
+a {
+  @include transition;
+  color: $brand-primary;
+  cursor: pointer;
+  background-color: transparent;
+  text-decoration: none;
+  &:hover, &:active {
+    color: $brand-primary;
+    text-decoration: none;
+    opacity: 0.8;
+    outline: 0
+  }
+}
+img, video, audio {
+  max-width: 100%;
+  width: auto;
+  max-height: inherit;
+  vertical-align: middle
+}
+button {
+  border-radius: 3px;
+}
+textarea {
+  resize: none;
+}
+tt {
+  margin: 0;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  padding: 0;
+  &:before, &:after {
+    content: "\00a0";
+    letter-spacing: -0.2em;
+  }
+}
+
+.container{
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  color: #a5a5a5;
+}
+
+.hidden {
+  display: none;
+}
+
+.mobile {
+  display: none;
+}

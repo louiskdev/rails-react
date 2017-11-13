@@ -1,0 +1,108 @@
+.notifications-wrapper {
+  background-color: #ffffff;
+}
+
+.notifications-empty-item {
+  padding: 9px 16px;
+  &:hover {
+    background-color: transparent !important;
+    cursor: auto !important;
+  }
+}
+
+.unread {
+  background-color: rgb(237, 245, 247)!important;
+}
+
+.remove-notif {
+  display: none;
+  &:hover {
+    svg {
+      color: #aaa!important;
+      fill: #aaa!important;
+    }
+  }
+}
+
+.notifications-event-item {
+  &:hover {
+    background-color: transparent !important;
+    cursor: auto !important;
+    .remove-notif {
+      display: block;
+    }
+  }
+  img {
+    top: 14px !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .title {
+    font-size: 12px;
+    margin-top: 4px;
+    padding-right: 64px;
+    .username {
+      font-size: 13px;
+      font-weight: bold;
+      color: #545454;
+      margin-right: 4px;
+    }
+  }
+  .time {
+    font-size: 10px;
+    color: #a2a2a2;
+  }
+}
+
+.notifications-friend-item {
+  &:hover {
+    background-color: transparent !important;
+    cursor: auto !important;
+    .remove-notif {
+      display: block;
+    }
+  }
+  img {
+    top: 14px !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .title {
+    font-size: 12px;
+    .username {
+      max-width: 160px;
+      font-size: 13px;
+      color: #545454;
+      font-weight: bold;
+    }
+    .message {
+      max-width: 160px;
+      display: block;
+    }
+  }
+  .time {
+    font-size: 10px;
+    color: #a2a2a2;
+  }
+}
+
+.unreadFriendsNotifs {
+  margin-left: 16px;
+  font-size: 12px;
+  background-color: #5ed28f;
+  padding: 4px 8px;
+  border-radius: 100%;
+  color: $white-color;
+}
+
+.notifications-wrapper {
+  .notifications-event-item {
+    .title {
+      .message, .username {
+        max-width: 100%;
+        display: inline-block;
+        margin-right: 4px;
+      }
+    }
+  }
+}

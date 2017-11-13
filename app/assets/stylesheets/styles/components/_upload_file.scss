@@ -1,0 +1,74 @@
+$progress-bar-color: #62db95;
+
+.upload-file-container {
+  padding: 20px 15px;
+  text-align: center;
+}
+
+.upload-progress {
+  padding: 7px 20px;
+  position: relative;
+  background-color: #f0f0f0;
+  margin-bottom: 1px;
+  .progress-content {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+  };
+  .progress-bar {
+    background-color: lighten($progress-bar-color, 20%);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+  };
+  .progress-done-icon {
+    position: relative;
+    z-index: 1;
+    float: right;
+    margin-right: -10px !important;
+    width: 20px !important;
+  };
+  &.done {
+    .progress-bar {
+      background-color: $progress-bar-color;
+    }
+  }
+}
+
+.files-container {
+  padding: 20px 25px;
+  .file-item {
+    padding: 15px 0;
+    display: flex;
+    &:not(:last-child) {
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
+  .file-icon {
+    flex-grow: 0;
+    line-height: 1;
+  }
+  .file-info {
+    flex-grow: 1;
+    padding: 0 15px;
+    .metas {
+      color: #888;
+      margin-top: 9px;
+    }
+    .meta {
+      .meta-icon {
+        vertical-align: middle;
+        margin-right: 7px;
+        display: inline-block;
+      }
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+    }
+  }
+  .file-download {
+    flex-grow: 0;
+  }
+}

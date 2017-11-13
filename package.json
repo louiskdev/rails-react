@@ -1,0 +1,43 @@
+{
+  "name": "mybubblz",
+  "version": "1.0.0",
+  "description": "Mybubblz social network",
+  "main": "server-express.js",
+  "engines": {
+    "node": "5.0.0",
+    "npm": "3.3.6"
+  },
+  "scripts": {
+    "postinstall": "cd client && npm install",
+    "test": "rspec && npm run test:client && npm run lint",
+    "test:client": "(cd client && npm run test --silent)",
+    "lint": "(cd client && npm run lint --silent)",
+    "build:clean": "rm app/assets/webpack/*",
+    "build:production:client": "(cd client && npm run build:production:client --silent)",
+    "build:production:server": "(cd client && npm run build:production:server --silent)",
+    "build:client": "(cd client && npm run build:client --silent)",
+    "build:server": "(cd client && npm run build:server --silent)",
+    "build:dev:client": "(cd client && npm run build:dev:client --silent)",
+    "build:dev:server": "(cd client && npm run build:dev:server --silent)",
+    "hot-assets": "(cd client && npm run hot-assets)",
+    "start": "(cd client && npm run start --silent)",
+    "start:prod": "bundle install && npm install && ps aux | grep puma | awk '{print $2}' | xargs sudo kill && RAILS_ENV=production bundle exec rake db:migrate && rm public/assets/application_static* && rm public/assets/*-bundle.js && bundle exec rake assets:precompile && RAILS_ENV=production bundle exec puma -C config/puma.rb -d",
+    "assets:rebuild": "RAILS_ENV=production rake assets:clobber && RAILS_ENV=production bundle exec rake assets:precompile"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "mybubblz",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "https://mybubblz.com/",
+  "dependencies": {},
+  "devDependencies": {},
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ]
+}

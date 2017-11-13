@@ -1,0 +1,59 @@
+/* Image editor */
+#preview-wrapper {
+  h2 {
+    color: #999999;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .img-preview {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  .rotate-img {
+    cursor: pointer;
+    float: right;
+    font-size: 1.5em;
+  }
+}
+
+.create-bubble {
+  padding: 1em 0em!important;
+  .upload-paper {
+    border: none!important;
+  }
+}
+
+.create-channel {
+  padding: 2em !important;
+}
+
+.show-editor {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  display: block;
+  z-index: 10;
+  .show-editor-icon {
+    position: absolute;
+    left: 45%;
+    top: 45%;
+    display: none;
+  }
+  .show-editor-hover {
+    border-radius: 500px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+    opacity: 0.5;
+    display: none;
+  }
+  &:hover {
+    .show-editor-icon, .show-editor-hover {
+      display: block;
+    }
+  }
+}

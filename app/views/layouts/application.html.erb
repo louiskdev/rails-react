@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyBubblz (beta)</title>
+  <%= csrf_meta_tags %>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="The privacy minded Social Media of tomorrow. Separate your colleagues, friends, family, etc and share accordingly.">
+  <meta name="author" content="Mybubblz">
+  <meta name="current_user" id="<%= current_user.try(:id) %>" username="<%= current_user.try(:name) %>" email="<%= current_user.try(:email) %>">
+  <meta name="logged_in" authenticated="<%= user_signed_in? %>" />
+  <meta name="env" env="<%= Rails.env %>" />
+
+  <meta name="pusher-app-key" content="<%= ENV['PUSHER_KEY'] %>">
+  <meta name="pusher-app-cluster" content="<%= ENV['PUSHER_CLUSTER'].present? ? ENV['PUSHER_CLUSTER'] : 'us'  %>">
+
+  <meta name="opentok-api-key" content="<%= ENV['OPENTOK_API_KEY'] %>">
+
+  <meta name="facebook-api-key" content="<%= ENV['FACEBOOK_API_KEY'] %>">
+
+  <meta name="ga-code" content="<%= ENV['GA_CODE'] %>">
+
+  <link rel="icon" href="/assets/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon/apple-icon-72x72.png">
+
+  <%= env_stylesheet_link_tag(static: '/assets/application_static.css?' + rand(5...99999999).to_s,
+                                hot: 'application_non_webpack',
+                                media: 'all')  %>
+  <!-- These do not use turbolinks, so no data-turbolinks-track -->
+  <!-- This is to load the hot assets. -->
+  <%= env_javascript_include_tag(hot: ['http://localhost:3500/vendor-bundle.js',
+                                       'http://localhost:3500/app-bundle.js']) %>
+
+  <%= env_javascript_include_tag(static: ['/assets/vendor-bundle.js?' + rand(5...99999999).to_s,
+                                          '/assets/app-bundle.js?' + rand(5...99999999).to_s]) %>
+
+</head>
+<body>
+
+<%= yield %>
+
+<script
+  defer
+  type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>">
+</script>
+<script defer src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+
+</body>
+</html>

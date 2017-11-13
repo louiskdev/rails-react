@@ -1,0 +1,151 @@
+.complete-profile-wrapper,
+.create-password-wrapper,
+.signin-wrapper {
+  padding: 3em 0 10em 0;
+  text-align: center;
+  .logo {
+    margin-bottom: 40px;
+    font-size: 30px;
+    .app-logo-wrapper {
+      margin-left: 0;
+      width: 45px;
+      border-radius: 14px;
+      padding: 12px 6px;
+      .app-logo-text {
+        color: #177082;
+      }
+    }
+  }
+  h1 {
+    margin: 0 0 20px 0;
+    font-size: 25px;
+  }
+  .top-steps {
+    text-align: left;
+    overflow: auto;
+    max-width: 900px;
+    margin: 0 auto;
+    .icon-steps {
+      width: 36px !important;
+      height: 36px !important;
+      top: 20px !important;
+      margin: 0 !important;
+    }
+  }
+  .radio-wrapper {
+    text-align: left;
+  }
+  h2 {
+    color: #4B4B4B;
+    font-weight: 400;
+    margin: 80px 0 40px 0;
+  }
+  .form-complete-profile {
+    max-width: 690px;
+    margin: 0 auto;
+    border-radius: 4px;
+    .papers-wrapper {
+      box-shadow: 0 2px 8px rgba(31,45,61,0.05);
+      display: -ms-flex;
+      display: -webkit-flex;
+      display: flex;
+    }
+    .radio-wrapper {
+      line-height: 0;
+    }
+  }
+  .upload-paper {
+    border: 1px solid #DFDFDF;
+    border-width: 1px 0 1px 1px;
+    border-radius: 4px 0 0 4px !important;
+    background-color: #fdfdfd !important;
+    width: 250px;
+    .upload-subhint {
+      span {
+        display: inline-block;
+        color: #8a8a8a;
+        font-size: 12px;
+        .red {
+          color: #ee4141;
+        }
+      }
+    }
+    .upload-avatar {
+      width: 136px;
+      height: 136px;
+      border: 1px dashed #dfdfdf;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+      background-color: $white-color;
+      border-radius: 500px;
+      img {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 136px;
+        width: 136px;
+      }
+      &:hover {
+        cursor: pointer;
+        // background-color: #f6fdff;
+      }
+    }
+    sup, p {
+      display: block;
+      color: #000000;
+      font-weight: 400;
+      font-size: 1em;
+    }
+    sup {
+      color: #999999;
+      height: 20px;
+    }
+  }
+  .papers-wrapper {
+    .user-fields-paper {
+      border: 1px solid #DFDFDF;
+      border-radius: 0 4px 4px 0 !important;
+      width: 440px;
+    }
+  }
+  .terms_links {
+    font-weight: 100;
+    a {
+      color: #999999;
+      font-weight: bold;
+    }
+  }
+}
+
+.create-password-wrapper, .signin-wrapper {
+  h2 {
+    margin: 80px 0 8px 0;
+  }
+  h3 {
+    color: #A5A5A5;
+    font-weight:400;
+    font-size: 1.1em;
+    margin-bottom: 40px;
+  }
+}
+
+.signin-wrapper
+ {
+  h2 {
+    margin: 0px 0 12px 0;
+  }
+  .forgot-password-link {
+    text-transform: uppercase;
+    color: #696868;
+    font-size: 12px;
+    text-decoration: none;
+    display: block;
+  }
+  .user-fields-paper {
+    border-radius: 4px !important;
+  }
+}

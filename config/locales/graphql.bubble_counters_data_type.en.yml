@@ -1,0 +1,32 @@
+
+en:
+  graphql:
+    bubble_counters_data_type:
+      type_description: |
+        *Special type, created for outputting counter's values of unread records in bubble.*
+        Appropriate `rails` model is absent.
+
+      feed_unread_items_count: |
+        *Number of unviewed bubble feed records by current user.*
+
+        **Returned value:** `Integer`.
+      blog_unread_items_count: |
+        *Number of blog widget records of current bubble unread by current user.*
+
+        **Returned value:** `Integer`.
+      chat_unread_items_count: |
+        *Number of chat widget messages unread by current user.*
+
+        **Returned value:** `Integer`.
+      gallery_unread_items_count: |
+        *Number of bubble gallery elements unviewed bu current user.*
+
+        **Returned value:** `Integer`.
+      events_unread_items_count: |
+        *Number of bubble events widget records unviewed bu current user.*
+
+        **Returned value:** `Integer`.
+      total_unread_items_count: |
+        *Common number of current bubble items unviewed by current user.*
+
+        **Returned value:** `Integer`.

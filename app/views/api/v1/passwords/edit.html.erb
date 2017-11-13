@@ -1,0 +1,50 @@
+<div id="react-wrapper1">
+  <section class="container resetpw">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <h2>Change your password</h2>
+        <%= form_for(resource, as: resource_name, url: api_v1_password_path, html: { method: :put }) do |f| %>
+          <div class="control-group">
+            <%= devise_error_messages! %>
+            <%= f.hidden_field :reset_password_token %>
+            <div class="controls">
+              <%= f.label :password, "New password" , class:"form-label"%><br />
+              <% if @minimum_password_length %>
+              <p class="validation-error">(<%= @minimum_password_length %> characters minimum)</p>
+              <% end %><br />
+              <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control' %>
+            </div>
+
+            <div class="controls">
+              <%= f.label :password_confirmation, "Confirm new password", class:"form-label" %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+            </div>
+
+            <div class="controls submit-control">
+              <%= f.submit "Change my password" , class: 'btn btn-success'%>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-wrap" data-reactid=".0.3" style="position: fixed;">
+    <div class="container-fluid " data-reactid=".0.3.0">
+      <div class="row" data-reactid=".0.3.0.0">
+        <div class="col-md-push-8 col-md-4 clearfix text-center" data-reactid=".0.3.0.0.0">
+          <div class="social" data-reactid=".0.3.0.0.0.0">
+            <span class="fa-stack social-i" data-reactid=".0.3.0.0.0.0.0">
+            <a href="" data-reactid=".0.3.0.0.0.0.0.0"><i class="mdi mdi-circle-thin fa-stack-2x" data-reactid=".0.3.0.0.0.0.0.0.0"></i><i class="mdi mdi-instagram fa-stack-1x" data-reactid=".0.3.0.0.0.0.0.0.1"></i></a></span><span class="fa-stack social-i" data-reactid=".0.3.0.0.0.0.1"><a href="" data-reactid=".0.3.0.0.0.0.1.0"><i class="mdi mdi-circle-thin fa-stack-2x" data-reactid=".0.3.0.0.0.0.1.0.0"></i><i class="mdi mdi-twitter fa-stack-1x" data-reactid=".0.3.0.0.0.0.1.0.1"></i></a></span><span class="fa-stack social-i" data-reactid=".0.3.0.0.0.0.2"><a href="" data-reactid=".0.3.0.0.0.0.2.0"><i class="mdi mdi-circle-thin fa-stack-2x" data-reactid=".0.3.0.0.0.0.2.0.0"></i><i class="mdi mdi-facebook fa-stack-1x" data-reactid=".0.3.0.0.0.0.2.0.1"></i></a></span>
+          </div>
+        </div>
+        <div class="col-md-4" data-reactid=".0.3.0.0.1"><ul class="footer-links" data-reactid=".0.3.0.0.1.0"><li data-reactid=".0.3.0.0.1.0.0"><a href="" data-reactid=".0.3.0.0.1.0.0.0">Register</a></li><li data-reactid=".0.3.0.0.1.0.1"><a href="" data-reactid=".0.3.0.0.1.0.1.0">Press</a></li><li data-reactid=".0.3.0.0.1.0.2"><a href="" data-reactid=".0.3.0.0.1.0.2.0">Contact Us</a></li><li data-reactid=".0.3.0.0.1.0.3"><a href="" data-reactid=".0.3.0.0.1.0.3.0">Privacy Policy</a></li><li data-reactid=".0.3.0.0.1.0.4"><a href="" data-reactid=".0.3.0.0.1.0.4.0">Terms of Service</a></li></ul>
+        </div>
+        <div class="col-md-pull-8 col-md-4" data-reactid=".0.3.0.0.2">
+          <div class="copyright">2015 Copyright ©MyBubblz.com. All Rights Reserved.</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>

@@ -1,0 +1,403 @@
+.myb-dashboard {
+  letter-spacing: 0.02em;
+  padding-top: 56px;
+  color: #424242;
+
+  // Left, center, right columns
+  .myb-dashboard-row {
+    margin: 0 -15px;
+    display: flex;
+  }
+  .myb-dashboard-left {
+    background-color: #FFFFFF;
+    transition: all .3s ease 0.15s;
+    clear: both;
+    & > div {
+      box-shadow: none!important;
+    }
+    &.short-style {
+      transition: all .2s ease .1s;
+      .myb-feed-label {
+        display: none;
+      }
+      .user-menu-block {
+        background: #ffffff;
+      }
+    }
+    .user-menu-block{
+      height: 120px;
+      background-size: cover!important;
+
+      .myb-feed {
+        padding: 10px 15px;
+        padding-top: 80px;
+        margin-top: 0;
+        height: auto;
+        &:hover {
+          background-color: transparent;
+          .myb-feed-label {
+            color: #ffffff!important;
+          }
+        }
+        .myb-feed-label {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .myb-dashboard-center {
+    padding: 40px 0px;
+    margin-left: 225px;
+    max-width: 670px;
+  }
+
+  .myb-dashboard-center-without-right {
+    padding: 40px 0;
+  }
+  .myb-dashboard-center,
+  .myb-dashboard-center-without-right {
+    width: 100%;
+    max-width: 100%;
+    &.without-sidebar {
+      margin-left: 0;
+    }
+  }
+
+  // First message in MyBubblz
+  .my-first-message {
+    padding: 10px 18px;
+    .welcome-text {
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .new-message-input {
+      font-size: 14px;
+      line-height: 24px;
+      width: 100%;
+      height: 120px;
+      display: block;
+      position: relative;
+      transition: height 200ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      border: 1px solid rgb(233, 232, 232);
+      border-radius: 4px;
+      padding: 0px 15px;
+      padding-top: 12px;
+      max-height: 120px;
+      overflow-y: auto;
+      background-color: rgb(255, 255, 255);
+    }
+  }
+  .tutorial-videos {
+    h1 {
+      color: #5E5E5E;
+      margin-bottom: 12px;
+    }
+    .video-title {
+      height: 45px;
+      line-height: 45px;
+      padding: 0 15px;
+    }
+  }
+
+  .message-bottom {
+    position: relative;
+    .photo-icon {
+      width: 30px;
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
+      display: inline-block;
+    }
+  }
+
+  .myb-feeds {
+    border-radius: 4px 4px 0 0;
+    .search-filters-panel {
+      padding-bottom: 0;
+    }
+    .myb-feeds-wrapper {
+      border-radius: 4px 4px 0 0;
+      border-bottom: none;
+    }
+    .new-message-box {
+      border-radius: 4px;
+      padding: 6px;
+      background-color: $new-message-box-bg-color;
+      display: flex;
+      position: relative;
+      /*box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 4px;
+      margin-bottom: 8px;*/
+      margin-bottom: 0;
+      &.edit-post-box {
+        box-shadow: none;
+        border: 1px solid #e9e8e8;
+      }
+      .user-avatar {
+        width: 40px;
+      }
+      .photo-icon {
+        width: 30px;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        display: inline-block;
+      }
+    }
+    .new-message-box-group {
+      flex-grow: 1;
+      min-height: 36px;
+      height: auto;
+      overflow: hidden;
+      border-radius: 4px;
+      background-color: $white-color;
+      .new-message-box-group-inner {
+        display: flex;
+        position: relative;
+        cursor: text;
+        border-radius: 4px;
+      }
+      &.edit-post {
+        font-size: 14px;
+        line-height: 24px;
+        width: 100%;
+        min-height: 120px;
+        display: block;
+        position: relative;
+        transition: height 200ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        padding: 0;
+        overflow-y: auto;
+        background-color: rgb(255, 255, 255);
+        .new-message-input {
+          padding: 0;
+        }
+      }
+      .new-message-input{
+        color: #424242;
+        -webkit-appearance: none;
+        background: transparent;
+        flex-grow: 1;
+        font-size: 13px;
+        outline: 0;
+        min-height: 30px;
+        width: 100%;
+        padding: 8px 8px 0 8px;
+        resize: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-bottom: 0;
+        word-wrap: break-word;
+        box-sizing: border-box;
+        border: none;
+
+        .visibleContent {
+          display: block;
+          text-indent: 0!important;
+          top: 8px;
+          position: absolute;
+        }
+        .photo-icon {
+          width: 30px;
+          text-align: center;
+          line-height: 30px;
+          cursor: pointer;
+          display: inline-block;
+          > * {
+            vertical-align: middle;
+          }
+          &:hover {
+            background-color: #f1f1f1;
+          }
+        }
+
+      }
+    }
+
+  }
+
+  // Right sidebar widgets
+  .interests {
+    border-radius: 4px;
+    background-color: $white-color;
+    border: 1px solid $dashboard-border-color;
+    padding: 12px 5px 10px 5px;
+    &:not(:last-child) {
+      margin-bottom: 19px;
+    }
+    .interest {
+      &:not(:last-child) {
+        margin-bottom: 19px;
+      }
+    }
+    .view_more {
+      margin-left: 16px;
+    }
+  }
+
+}
+
+.custom-scrollbars {
+  &:hover {
+    div:nth-child(3){
+      opacity: 1!important;
+    }
+  }
+  div:nth-child(3){
+    opacity: 0!important;
+    transition: opacity 200ms ease!important;
+  }
+}
+
+// Left sidebar feeds
+.myb-feed {
+  display: block;
+  padding: 10px 18px;
+  margin: 5px 0;
+  position: relative;
+  &:hover {
+    background-color: #F5F5F5;
+    .myb-feed-label, svg {
+      color: #62db95!important;
+    }
+  }
+  &.active {
+    background-color: #F5F5F5;
+    .myb-feed-label, svg {
+      color: #62db95!important;
+    }
+  }
+  &.disabled {
+    .myb-feed-label {
+      color: #dddddd!important;
+    }
+    svg {
+      fill: #dddddd!important;
+    }
+  }
+  img {
+    margin: 0!important;
+  }
+  .myb-feed-types {
+    padding-right: 20px;
+  }
+  .myb-feed-label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 22px;
+    position: absolute;
+    bottom: 14px;
+    left: 28px;
+    color: #949494;
+    height: 18px;
+    overflow: hidden;
+  }
+  .bubble-counter {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+  }
+  &:not(:hover) .myb-feed-label {
+    color: #949494;
+  }
+}
+.fixed-types .myb-feed {
+  position: relative;
+  height: 44px;
+  overflow: hidden;
+}
+.leftbar-title {
+  padding: 6px 16px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #949494;
+  font-size: 13px;
+  a {
+    color: #949494;
+    font-size: 11px;
+  }
+}
+.bubbles-wrapper {
+  min-height: 64px;
+}
+.view-all {
+  display: inline;
+  font-size: 0.9em;
+}
+.no-bubbles {
+  padding: 6px 26px;
+  text-align: center;
+}
+.myb-search-bubbles {
+  height: 30px;
+  display: flex;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: 1px solid #949494;
+  border-radius: 999em;
+  width: 85%;
+  margin-left: 16px;
+  .search-icon-wrapper {
+    width: 40px;
+    height: 100%;
+    text-align: center;
+  }
+  .search-field-container {
+    height: 100%;
+    margin-right: 20px;
+    flex-grow: 1;
+  }
+  .search-field {
+    height: 28px;
+    line-height: 20px;
+    padding-left: 0;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    box-shadow: none;
+    -webkit-appearance: none;
+    &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color: #aaa;
+      font-size: 14px;
+    }
+    &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: #aaa;
+      opacity: 1;
+      font-size: 15px;
+    }
+    &::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: #aaa;
+      opacity: 1;
+      font-size: 14px;
+    }
+    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: #aaa;
+      font-size: 14px;
+    }
+  }
+}
+
+
+#sidebar-menu-expand {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 400;
+  padding: 17px 18px;
+  line-height: 1;
+}
+
+.filters-block-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0px 0px 0px 16px;
+}
+
+// top banner needs more padding
+.with-top-banner .myb-dashboard {
+  padding-top: 82px;
+}

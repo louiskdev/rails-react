@@ -1,0 +1,4 @@
+#!/bin/bash -i
+#bundle install
+#foreman start -f Procfile.dev -p 3000
+foreman start -f Procfile.hot

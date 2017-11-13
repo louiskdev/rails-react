@@ -1,0 +1,147 @@
+<!--<style>
+    .navbar {
+        width: 100%;
+        margin: 0px;
+        background: #ccc;
+    }
+    .header {
+        padding: 10px;
+        background: #23cb7c;
+    }
+    .fluid-container {
+        width: 520px;
+        margin:0 auto;
+    }
+    .main-container {
+        border-radius: 4px;
+        background: #eee;
+        padding: 40px;
+        margin-top: 20px;
+        border: 1px solid #aaa;
+        text-align: center;
+        color: #999;
+    }
+    .btn-confirm {
+        padding: 10px;
+        text-align: center;
+        background: #23cb7c;
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        font-size: 28px;
+        border-radius: 8px;
+        width: 200px;
+        margin: 0 auto;
+    }
+    .content-wrapper .title {
+        margin-top: 0px;
+        color: #23cb7c;
+    }
+    .content-wrapper .content-text {
+        font-size: 20px;
+        line-height: 30px;
+        margin-bottom: 30px;
+    }
+    .main-container .content-wrapper{
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: solid 1px #aaa;
+    }
+    .main-container .image-wrapper {
+
+    }
+    .main-container .image-wrapper .image-section {
+        width: 170px;
+        height: 180px;
+        display: inline-block;
+
+    }
+    .main-container .image-wrapper .image-section .title {
+        text-transform: uppercase;
+        font-size: 18px;
+        line-height: 40px;
+
+    }
+    .main-container .image-wrapper .image-section .image-container {
+        background: #aaa;
+        text-transform: uppercase;
+        font-size: 25px;
+        width: 155px;
+        height: 140px;
+        margin: 0 5px;
+    }
+    .footer {
+        color: #999;
+        text-align: center;
+    }
+    .footer .content {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-bottom: solid 1px #999;
+        display: block;
+        font-size: 16px;
+    }
+    .footer .copyright {
+        display: block;
+        font-size: 18px;
+    }
+</style>-->
+
+<div class="navbar" style="width: 100%; margin: 0px; background: #ccc;">
+  <div class="header" style="padding: 10px; background: #23cb7c; margin-bottom: 20px;">
+    <div class="fluid-container" style="width: 520px; margin:0 auto;">
+        <span class="logo-wrap pull-left">
+          <a href="<%= root_url %>"> <img class="logo" src="<%= root_url %>/assets/logo.png" alt="" width=""/></a>
+        </span>
+    </div>
+  </div>
+  <div class="main-container fluid-container" style="border-radius: 4px; background: #eee; padding: 40px;
+      margin-top: 20px; border: 1px solid #aaa; text-align: center; color: #999; width: 520px; margin:0 auto;">
+    <div class="content-wrapper">
+      <h1 class="title" style="margin-top: 0px; color: #23cb7c;">Invitation to Bubblz!</h1>
+      <div class="content-text" style="font-size: 20px; line-height: 30px; margin-bottom: 30px; margin-top: 20px;">
+        Hello there! You have been invited by <%= @moderator_name %> to join <%= @moderator_gender == "female" ? 'her' : 'his' %> bubble <%= @bubble_name %>. On our website bubbles are groups of people with common interests!
+      </div>
+      <span class="content" style="padding: 10px; padding-bottom: 50px; border-bottom: solid 1px #999; display: block; font-size: 16px;">
+        Not sure about joining our community? You can check our website first, and return for invitation later. </br>
+        <a style="color:#22ca7b ;" href="<%= root_url %>"> www.mybubblz.com</a>
+      </span>
+      <a class="btn-confirm" style="padding: 10px; text-align: center; background: #23cb7c; display: block;
+          text-decoration: none; color: #fff; font-size: 28px; border-radius: 8px; width: 200px; margin: 0 auto;"
+         href="<%= %Q{ #{root_url}bubbles/#{@bubble_permalink}?new_member_token=#{@bubble_invitation.token}#{@confirmation_token.nil? ? '' : "&confirmation_token=#{@confirmation_token}"}} %>">
+        Accept invitation
+      </a>
+      <span class="content" style="padding: 10px; padding-bottom: 50px; border-bottom: solid 1px #999; display: block; font-size: 16px;">
+        By clicking on this link, you confirm than you have read and agreed with our <a style="color:#22ca7b ;" href="<%= "#{root_url}termsos" %>"> Terms of Service and Privacy Policy</a>.
+        </span>
+    </div>
+    <div class="image-wrapper">
+      <div class="image-section" style="width: 170px; height: 180px; display: inline-block;">
+        <span class="title" style="text-transform: uppercase; font-size: 18px; line-height: 40px;">
+            Security
+        </span>
+        <div class="image-container" style="background: #aaa; text-transform: uppercase; font-size: 25px; width: 155px; height: 140px; margin: 0 5px;">
+        </div>
+      </div>
+      <div class="image-section" style="width: 170px; height: 180px; display: inline-block;">
+        <span class="title" style="text-transform: uppercase; font-size: 18px; line-height: 40px;">
+            Collaborate
+        </span>
+        <div class="image-container" style="background: #aaa; text-transform: uppercase; font-size: 25px; width: 155px; height: 140px; margin: 0 5px;">
+        </div>
+      </div>
+      <div class="image-section" style="width: 170px; height: 180px; display: inline-block;">
+        <span class="title" style="text-transform: uppercase; font-size: 18px; line-height: 40px;">
+            Connect
+        </span>
+        <div class="image-container" style="background: #aaa; text-transform: uppercase; font-size: 25px; width: 155px; height: 140px; margin: 0 5px;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer fluid-container" style="color: #999; text-align: center; width: 520px; margin:0 auto;">
+    <span class="copyright" style="display: block; font-size: 18px;">
+        MyBubblez Inc. Street Name, post office 203030
+    </span>
+  </div>
+</div>

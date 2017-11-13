@@ -1,0 +1,121 @@
+.footer {
+  [id*="close-accordion"] {
+    display: none;
+  }
+  background-color: #354151;
+  padding: 32px 0 0 0;
+  color: $white-color;
+  &.whiteBackground {
+    background-color: $white-color;
+    border-top: 1px solid #dfdfdf;
+    span {
+      color: #B6B6B6!important;
+      font-weight: 400!important;
+    }
+    .footer_copyright {
+      background-color: #f9f9f9;
+      color: #B6B6B6;
+    }
+  }
+  &.darkBackground {
+    background-color: #3c4954;
+    padding: 60px 0 0 0;
+    border: none;
+    .accordion-content {
+      a {
+        color: #ddd!important;
+      }
+    }
+    .inactive {
+      color: rgba(200, 200, 200, 0.298039)!important;
+    }
+    .footer_copyright {
+      background-color: #34424d;
+    }
+  }
+
+  span, a {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    &:hover {
+    cursor: pointer !important;
+    }
+  }
+
+  .accordion-content {
+    a {
+      color: #777!important;
+    }
+  }
+
+  .inactive {
+    color: rgba(200, 200, 200, 0.298039);
+    font-size: 13px !important;
+    font-weight: 400 !important;
+  }
+
+  .footer_menuitems {
+    padding-bottom: 60px;
+  }
+
+  .footer_subheader {
+    text-transform: uppercase;
+    padding: 0px 24px;
+    text-decoration: none;
+    margin-top: 30px;
+    font-size: 12px;
+    &.footer_subheader_1 {
+      color: #5BA981;
+    }
+    &.footer_subheader_2 {
+      color: #5FB4D1;
+    }
+    &.footer_subheader_3 {
+      color: #A85687;
+    }
+    &.footer_subheader_4 {
+      color: #D1815E;
+    }
+  }
+  .footer_menu_1 {
+    padding: 12px 0!important;
+    font-weight: 100;
+    span:hover, a:hover {
+    background: transparent!important;
+    color: #5BA981!important;
+    }
+  }
+  .footer_menu_2 {
+    padding: 12px 0!important;
+    font-weight: 100;
+    span:hover, a:hover {
+     background: transparent!important;
+     color: #5FB4D1!important;
+    }
+  }
+  .footer_menu_3 {
+    padding: 12px 0!important;
+    font-weight: 100;
+    span:hover, a:hover {
+      background: transparent!important;
+      color: #A85687!important;
+    }
+  }
+  .footer_menu_4 {
+    padding: 12px 0!important;
+    font-weight: 100;
+    span:hover, a:hover {
+      background: transparent!important;
+      color: #D1815E!important;
+    }
+  }
+
+  .footer_copyright {
+    width: 100%;
+    background-color: #333C4B;
+    padding: 15px 0;
+    color: #85888F;
+    margin-left: 0;
+  }
+
+}

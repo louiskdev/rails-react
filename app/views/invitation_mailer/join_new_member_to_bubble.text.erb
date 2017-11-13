@@ -1,0 +1,14 @@
+---------------------------------
+     Invitation to Bubblz!
+---------------------------------
+
+Hello there!
+You have been invited by <%= @moderator_name %> to join <%= @moderator_gender == "female" ? 'her' : 'his' %> bubble <%= @bubble_name %>. On our website bubbles are groups of people with common interests!
+
+Not sure about joining our community? You can check our website first, and return for invitation later.
+<%= root_url %>
+
+<%= %Q{ #{root_url}bubbles/#{@bubble_permalink}?new_member_token=#{@bubble_invitation.token}#{@confirmation_token.nil? ? '' : "&confirmation_token=#{@confirmation_token}"}} %>
+By clicking on this link, you confirm than you have read and agreed with our Terms of Service and Privacy Policy (<%= "#{root_url}termsos" %>)
+
+MyBubblez Inc. Street Name, post office 203030

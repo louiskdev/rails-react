@@ -1,0 +1,136 @@
+.static-pages {
+  .welcome-wrapper {
+    z-index: 0;
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+    .container {
+      padding: 0;
+      z-index: 4;
+      overflow: hidden;
+      display: block;
+      position: relative;
+      top: 35%;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .introsection {
+      z-index: 4;
+      overflow: hidden;
+      text-align: center;
+      width: 100%;
+      margin: 0 auto;
+      h1 {
+        color: #ffffff;
+        font-size: 40px;
+        font-weight: 700;
+        padding: 0;
+        margin: 0;
+        letter-spacing: 3px;
+        b {
+          color: #b1e0cd;
+          font-weight: 700;
+          letter-spacing: 3px;
+        }
+      }
+      p {
+        color: #ffffff;
+      }
+      ul {
+        list-style: none;
+        li {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  &.dialog {
+    padding: 20px 0;
+  }
+  .container {
+    padding: 100px 0;
+    max-width: 1170px;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: $gray-darker;
+    text-align: center;
+  }
+  p {
+    color: $gray-darker;
+    font-size: 1rem;
+    line-height: 1.2;
+    word-spacing: 1px;
+    letter-spacing: 0.3px;
+  }
+  ul.add-padding {
+    padding-left: 40px;
+  }
+  ul {
+    padding: 0;
+    li {
+      &.parent {
+        list-style: none;
+        margin: 16px 0;
+      }
+      ul {
+        padding-left: 40px;
+      }
+      margin: 8px 0;
+      font-size: 1.1rem;
+      line-height: 1.2;
+      word-spacing: 1px;
+      letter-spacing: 0.3px;
+    }
+  }
+}
+
+.news-and-updates {
+  .container {
+    padding-top: 56px;
+  }
+  h1, h3, p {
+    color: #000000;
+  }
+  h1 {
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+  h2 {
+    color: #000000;
+    font-weight: bold;
+  }
+  h3 {
+    text-align: left;
+    color: #62db95;
+    font-size: 2rem;
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 8px;
+    .time {
+      display: inline-block;
+      font-size: 1.2rem;
+      color: #aaa;
+      font-weight: 100;
+      vertical-align: middle;
+    }
+  }
+  ul {
+    margin-left: 2rem;
+    padding-left: 1rem;
+    li {
+      font-size: 1rem;
+      color: #5f5759;
+    }
+  }
+}
+
+.about {
+  padding: 0!important;
+  ul {
+    li {
+      line-height: 1.6;
+      font-size: 18px;
+      font-weight: 300;
+    }
+  }
+}

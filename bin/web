@@ -1,0 +1,5 @@
+#!/bin/sh
+cd /app
+bundle check || bundle install
+bundle exec bin/rake db:migrate
+bundle exec rails server -b 0.0.0.0 -p 4000

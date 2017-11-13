@@ -1,0 +1,35 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: ./bin/web
+    labels:
+      - convox.port.443.protocol=tls
+      - convox.port.443.proxy=true
+    volumes:
+      - .:/app
+    volumes_from:
+      - box
+    ports:
+      - 80:4000
+      - 443:4001
+    links:
+      - db
+      - redis
+    env_file: .env
+    environment:
+      - DB_URL
+      - PORT
+  db:
+    image: convox/postgres
+    ports:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: password
+  redis:
+    image: convox/redis
+  box:
+    image: busybox
+    # command: echo "I'm a little data container, short and stout..."
+    volumes:
+      - /box
